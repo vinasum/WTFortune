@@ -13,7 +13,7 @@ export default function Home() {
           </p>
 
           <h2 className="text-4xl md:text-5xl font-light leading-tight">
-            想聽聽未來怎麼說嗎？
+            聽聽未來怎麼說？
           </h2>
 
           <p className="mt-6 text-[#9f9788] text-lg leading-relaxed">

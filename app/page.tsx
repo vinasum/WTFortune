@@ -26,7 +26,7 @@ export default function Home() {
           
           {/* 小六壬 */}
           <div className="rounded-3xl border border-[#2a2a2a] bg-[#181818] p-8 hover:border-[#b8aa8c] transition duration-300 flex flex-col">
-            <div className="text-3xl mb-4">🌙</div>
+            <div className="text-3xl">🌙</div>
 
             <h2 className="text-2xl font-light mb-3">
               小六壬占問
@@ -46,7 +46,7 @@ export default function Home() {
 
           {/* 數字起卦 */}
           <div className="rounded-3xl border border-[#2a2a2a] bg-[#181818] p-8 hover:border-[#b8aa8c] transition duration-300 flex flex-col">
-            <div className="text-3xl mb-4">🔢</div>
+            <div className="text-3xl">🔢</div>
 
             <h2 className="text-2xl font-light mb-3">
               數字起卦

@@ -14,7 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "What the Fortune",
-  description: "東方命理快速占卜（陸續增加中）",
+  description: "命理快速占卜（陸續增加中）",
+    icons: {
+    icon: "/icon.png",
+  },
+
 };
 
 export default function RootLayout({

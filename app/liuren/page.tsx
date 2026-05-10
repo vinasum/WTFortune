@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DivinationForm from "./components/DivinationForm";
 import DivinationResult from "./components/DivinationResult";
 import { useLiurenEngine } from "./hooks/useLiurenEngine";
@@ -18,16 +18,11 @@ export default function LiurenPage() {
     prompt
   } = useLiurenEngine();
 
+  // 🧠 唯一占卜入口
   const handle = () => {
-    if (!question) return alert("請輸入問題");
+    if (!question.trim()) return alert("請輸入問題");
     calculate(question, category, mode);
   };
-
-  // 🔥 核心修正：mode 改變時重新生成 prompt
-  useEffect(() => {
-    if (!result) return;
-    calculate(question, category, mode);
-  }, [mode]);
 
   return (
     <main className="min-h-screen bg-[#111] text-[#f5f1ea] py-20 px-6">
@@ -55,7 +50,7 @@ export default function LiurenPage() {
           onCopy={() => navigator.clipboard.writeText(prompt)}
         />
 
-        {/* 🧭 解析模式 */}
+        {/* 🧭 解析模式（只影響 prompt，不重新計算） */}
         {result && (
           <div className="mt-10 text-left">
 

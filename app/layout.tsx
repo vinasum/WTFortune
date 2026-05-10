@@ -15,10 +15,31 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "What the Fortune",
   description: "命理快速占卜（陸續增加中）",
-    icons: {
+
+  // 🌐 favicon + app icon（桌面/瀏覽器）
+  icons: {
     icon: "/icon.png",
+    apple: "/apple-touch-icon.png",
   },
 
+  // 📱 Open Graph（LINE / FB / iMessage）
+  openGraph: {
+    title: "What the Fortune",
+    description: "命理快速占卜（陸續增加中）",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+
+  // 🐦 Twitter / X 分享
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({

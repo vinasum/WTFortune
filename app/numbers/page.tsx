@@ -6,7 +6,7 @@ export default function NumbersPage() {
           NUMBER ORACLE
         </p>
 
-        <h1 className="text-5xl font-light mb-6">
+        <h1 className="text-4xl font-light mb-6">
           數字起卦
         </h1>
 

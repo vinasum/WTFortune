@@ -29,7 +29,7 @@ export default function LiurenPage() {
 
       <div className="max-w-xl mx-auto text-center">
 
-        <h1 className="text-5xl font-light mb-12">
+        <h1 className="text-4xl font-light mb-12">
           小六壬測算
         </h1>
 

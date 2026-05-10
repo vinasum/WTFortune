@@ -12,11 +12,9 @@ export default function Home() {
             EASTERN AI ORACLE
           </p>
 
-          <h1 className="text-5xl md:text-6xl font-light leading-tight">
-            此時此刻，
-            <br />
+          <h2 className="text-5xl md:text-6xl font-light leading-tight">
             想聽聽未來怎麼說嗎？
-          </h1>
+          </h2>
 
           <p className="mt-6 text-[#9f9788] text-lg leading-relaxed">
             東方命理 × AI 神諭系統

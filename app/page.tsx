@@ -9,10 +9,10 @@ export default function Home() {
         {/* 標題區 */}
         <div className="text-center max-w-2xl">
           <p className="text-sm tracking-[0.3em] text-[#b8aa8c] mb-4">
-            EASTERN AI ORACLE
+            WHAT THE FORTUNE
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-light leading-tight">
+          <h2 className="text-4xl md:text-5xl font-light leading-tight">
             想聽聽未來怎麼說嗎？
           </h2>
 

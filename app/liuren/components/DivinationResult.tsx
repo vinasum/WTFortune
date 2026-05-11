@@ -106,7 +106,7 @@ export default function DivinationResult({
           transition
         "
       >
-        複製你的AI神諭貼到 ChatGPT
+        複製你的AI神諭貼到ChatGPT
       </button>
     </div>
   );

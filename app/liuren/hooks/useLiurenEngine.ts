@@ -27,7 +27,11 @@ export function useLiurenEngine() {
 請用溫柔、因果推導方式解讀，偏情感與人生脈絡。`.trim();
   };
 
-  const calculate = (question: string, category: string, mode: string) => {
+  const calculate = (
+    question: string,
+    category: string,
+    mode: string
+  ) => {
     const now = new Date();
     const lunar = Lunar.fromDate(now);
 
@@ -45,7 +49,9 @@ export function useLiurenEngine() {
       `${lunar.getMonthInChinese()}月${lunar.getDayInChinese()} ${lunar.getTimeZhi()}時`;
 
     const desc =
-      PALACE_DESCRIPTIONS[finalResult as keyof typeof PALACE_DESCRIPTIONS];
+      PALACE_DESCRIPTIONS[
+        finalResult as keyof typeof PALACE_DESCRIPTIONS
+      ];
 
     setResult(finalResult);
     setDescription(desc);
@@ -109,11 +115,20 @@ ${getModePrompt(mode)}
     setPrompt(promptText);
   };
 
+  // 🔄 重置整個占卜狀態
+  const reset = () => {
+    setResult(null);
+    setLunarInfo("");
+    setPrompt("");
+    setDescription("");
+  };
+
   return {
     result,
     lunarInfo,
     prompt,
     description,
-    calculate
+    calculate,
+    reset
   };
 }

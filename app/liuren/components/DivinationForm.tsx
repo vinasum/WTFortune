@@ -14,7 +14,17 @@ export default function DivinationForm({
   onSubmit
 }: Props) {
   return (
-    <div className="space-y-8 text-left bg-[#181818] p-8 rounded-3xl border border-[#2a2a2a]">
+    <div className="
+      space-y-8
+      text-left
+      bg-[#181818]
+      p-8
+      rounded-3xl
+      border border-[#2a2a2a]
+      transition
+      hover:border-[#b8aa8c]/60
+      shadow-[0_0_40px_rgba(0,0,0,0.35)]
+    ">
 
       {/* 🧠 輸入問題 */}
       <div>
@@ -32,7 +42,9 @@ export default function DivinationForm({
             border border-[#2a2a2a]
             p-4
             text-[#f5f1ea]
-            focus:outline-none focus:border-[#b8aa8c]/60
+            focus:outline-none
+            focus:border-[#b8aa8c]/60
+            transition
           "
         />
       </div>
@@ -53,7 +65,9 @@ export default function DivinationForm({
             border border-[#2a2a2a]
             p-4
             text-[#f5f1ea]
-            focus:outline-none focus:border-[#b8aa8c]/60
+            focus:outline-none
+            focus:border-[#b8aa8c]/60
+            transition
           "
         >
           <option>感情</option>
@@ -70,10 +84,11 @@ export default function DivinationForm({
         className="
           w-full
           rounded-full
-          border border-[#3a3a3a]
+          border border-[#3a3a2a]
           py-4
           text-[#f5f1ea]
           hover:border-[#b8aa8c]/60
+          hover:bg-[#1f1f1f]
           transition
         "
       >

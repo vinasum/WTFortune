@@ -1,13 +1,16 @@
 {
   "name": "What the Fortune",
   "short_name": "Fortune",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "/icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone"
+  ]
 }

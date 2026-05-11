@@ -76,17 +76,25 @@ export default function Home() {
             <a
               href="/liuren"
               className="
-                relative z-10
-                mt-10
-                flex items-center justify-center
-                h-12
-                rounded-full
-                border border-white/10
-                bg-white/[0.03]
-                hover:border-[#b8aa8c]
-                hover:bg-white/[0.06]
-                transition-all duration-300
-              "
+  relative z-10
+  mt-10
+  flex items-center justify-center
+  h-12
+  rounded-full
+
+  border border-[#5a5246]
+  bg-white/[0.04]
+
+  text-[#f5f1ea]
+
+  shadow-[0_0_20px_rgba(255,255,255,0.04)]
+
+  hover:border-[#cdbb94]
+  hover:bg-white/[0.08]
+  hover:shadow-[0_0_30px_rgba(205,187,148,0.12)]
+
+  transition-all duration-300
+"
             >
               開始占問
             </a>
@@ -127,17 +135,25 @@ export default function Home() {
             <a
               href="/numbers"
               className="
-                relative z-10
-                mt-10
-                flex items-center justify-center
-                h-12
-                rounded-full
-                border border-white/10
-                bg-white/[0.03]
-                hover:border-[#b8aa8c]
-                hover:bg-white/[0.06]
-                transition-all duration-300
-              "
+  relative z-10
+  mt-10
+  flex items-center justify-center
+  h-12
+  rounded-full
+
+  border border-[#5a5246]
+  bg-white/[0.04]
+
+  text-[#f5f1ea]
+
+  shadow-[0_0_20px_rgba(255,255,255,0.04)]
+
+  hover:border-[#cdbb94]
+  hover:bg-white/[0.08]
+  hover:shadow-[0_0_30px_rgba(205,187,148,0.12)]
+
+  transition-all duration-300
+"
             >
               開始起卦
             </a>

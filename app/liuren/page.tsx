@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+
 import DivinationForm from "./components/DivinationForm";
 import DivinationResult from "./components/DivinationResult";
 import { useLiurenEngine } from "./hooks/useLiurenEngine";
-import Image from "next/image";
 
 export default function LiurenPage() {
   const [question, setQuestion] = useState("");
@@ -17,12 +18,21 @@ export default function LiurenPage() {
     lunarInfo,
     calculate,
     description,
-    prompt
+    prompt,
+    reset
   } = useLiurenEngine();
 
   const handle = () => {
     if (!question.trim()) return alert("請輸入問題");
+
     calculate(question, category, mode);
+  };
+
+  // 🔄 重置整個占卜
+  const handleReset = () => {
+    setQuestion("");
+    setMode("因果說明");
+    reset();
   };
 
   return (
@@ -37,7 +47,8 @@ export default function LiurenPage() {
       <div className="max-w-xl mx-auto">
 
         {/* 🔙 返回首頁 */}
-        <div className="mb-10">
+        <div className="flex items-center justify-between mb-10">
+
           <Link
             href="/"
             className="
@@ -53,27 +64,45 @@ export default function LiurenPage() {
           >
             ← 返回首頁
           </Link>
+
+          {/* 🔄 重新開始 */}
+          {result && (
+            <button
+              onClick={handleReset}
+              className="
+                text-sm
+                tracking-[0.15em]
+                text-[#7d7668]
+                hover:text-[#f5f1ea]
+                transition
+              "
+            >
+              ↻ 重新開始
+            </button>
+          )}
+
         </div>
 
-{/* 🪷 標題 */}
-<div className="text-center mb-12">
+        {/* 🪷 標題 */}
+        <div className="text-center mb-12">
 
-  {/* 毛筆字 Logo */}
-  <div className="flex justify-center mb-6">
-    <Image
-      src="/liuren-logo.png"
-      alt="小六壬"
-      width={220}
-      height={120}
-      className="object-contain opacity-95"
-      priority
-    />
-  </div>
+          {/* 毛筆字 Logo */}
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/liuren-logo.png"
+              alt="小六壬"
+              width={220}
+              height={120}
+              className="object-contain opacity-95"
+              priority
+            />
+          </div>
 
-  {/* 副標 */}
-  {/* <h1 className="text-4xl font-light"> 小六壬測算 </h1> */}
+          {/* 副標 */}
+          {/* <h1 className="text-4xl font-light"> 小六壬測算 </h1> */}
 
-</div>
+        </div>
+
         {/* 🧿 Form */}
         <div className="mb-10">
           <DivinationForm

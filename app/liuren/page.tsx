@@ -71,9 +71,7 @@ export default function LiurenPage() {
   </div>
 
   {/* 副標 */}
-  <h1 className="text-4xl font-light">
-    小六壬測算
-  </h1>
+  {/* <h1 className="text-4xl font-light"> 小六壬測算 </h1> */}
 
 </div>
         {/* 🧿 Form */}

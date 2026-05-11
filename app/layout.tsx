@@ -15,18 +15,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Fortune",
   description: "命理快速占卜（陸續增加中）",
+  // 記得加入這行，連結 manifest.json
+  manifest: "/manifest.json", 
 
-  // 1. 必須加入 manifest 連結
-  manifest: "/manifest.json",
-
-  // 2. 修正圖示路徑與 PWA 設定
+  // 🌐 favicon + app icon
   icons: {
     icon: "/icon-v2.png",
-    // 建議直接用 icon-v2.png 或確保 apple-touch-icon-v2.png 檔案存在且「不透明」
-    apple: "/icon-v2.png", 
+    apple: "/apple-touch-icon-v2.png",
   },
 
-  // 3. iOS 專用進階設定，確保顯示效果
+  // 📱 iOS 專用，控制加到主畫面的名稱
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 
   // 📱 Open Graph
   openGraph: {
-    title: "What the Fortune",
+    title: "Fortune",
     description: "命理快速占卜（陸續增加中）",
     images: [
       {
@@ -47,32 +45,6 @@ export const metadata: Metadata = {
   },
 
   // 🐦 Twitter / X
-  twitter: {
-    card: "summary_large_image",
-    images: ["/og.png"],
-  },
-};
-
-  // 🌐 favicon + app icon（桌面/瀏覽器）
-  icons: {
-    icon: "/icon-v2.png",
-    apple: "/apple-touch-icon-v2.png",
-  },
-
-  // 📱 Open Graph（LINE / FB / iMessage）
-  openGraph: {
-    title: "What the Fortune",
-    description: "命理快速占卜（陸續增加中）",
-    images: [
-      {
-        url: "/og.png",
-        width: 512,
-        height: 512,
-      },
-    ],
-  },
-
-  // 🐦 Twitter / X 分享
   twitter: {
     card: "summary_large_image",
     images: ["/og.png"],

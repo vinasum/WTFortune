@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "What the Fortune",
+  title: "Fortune",
   description: "命理快速占卜（陸續增加中）",
 
   // 1. 必須加入 manifest 連結
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
 
   // 2. 修正圖示路徑與 PWA 設定
   icons: {
-    icon: "/icon.png",
-    // 建議直接用 icon.png 或確保 apple-touch-icon.png 檔案存在且「不透明」
-    apple: "/icon.png", 
+    icon: "/icon-v2.png",
+    // 建議直接用 icon-v2.png 或確保 apple-touch-icon-v2.png 檔案存在且「不透明」
+    apple: "/icon-v2.png", 
   },
 
   // 3. iOS 專用進階設定，確保顯示效果
@@ -55,8 +55,8 @@ export const metadata: Metadata = {
 
   // 🌐 favicon + app icon（桌面/瀏覽器）
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/icon-v2.png",
+    apple: "/apple-touch-icon-v2.png",
   },
 
   // 📱 Open Graph（LINE / FB / iMessage）

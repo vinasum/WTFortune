@@ -91,8 +91,8 @@ export default function LiurenPage() {
             <Image
               src="/liuren-logo.png"
               alt="小六壬"
-              width={220}
-              height={120}
+              width={200}
+              height={100}
               className="object-contain opacity-95"
               priority
             />

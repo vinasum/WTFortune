@@ -47,56 +47,11 @@ export default function LiurenPage() {
           result={result}
           lunarInfo={lunarInfo}
           description={description}
+          mode={mode}
+          setMode={setMode}   // ← 要加這個
           onCopy={() => navigator.clipboard.writeText(prompt)}
         />
 
-        {/* 🧭 解析模式（只影響 prompt，不重新計算） */}
-        {result && (
-          <div className="mt-10 text-left">
-
-            <label className="block text-sm tracking-[0.2em] text-[#b8aa8c] mb-4">
-              解析模式
-            </label>
-
-            <div className="grid grid-cols-3 gap-3">
-
-              <button
-                onClick={() => setMode("因果說明")}
-                className={`p-4 rounded-2xl border transition text-sm tracking-wide ${
-                  mode === "因果說明"
-                    ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
-                    : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
-                }`}
-              >
-                🪷 因果說明
-              </button>
-
-              <button
-                onClick={() => setMode("理性斷事")}
-                className={`p-4 rounded-2xl border transition text-sm tracking-wide ${
-                  mode === "理性斷事"
-                    ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
-                    : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
-                }`}
-              >
-                🔥 理性斷事
-              </button>
-
-              <button
-                onClick={() => setMode("潛意識")}
-                className={`p-4 rounded-2xl border transition text-sm tracking-wide ${
-                  mode === "潛意識"
-                    ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
-                    : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
-                }`}
-              >
-                🌌 潛意識
-              </button>
-
-            </div>
-
-          </div>
-        )}
 
       </div>
     </main>

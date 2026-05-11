@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 "use client";
 
 import { useState } from "react";
@@ -139,7 +139,7 @@ export default function LiurenPage() {
       </div>
     </main>
   );
-=======
+
 "use client";
 
 import { useState } from "react";
@@ -280,5 +280,5 @@ export default function LiurenPage() {
       </div>
     </main>
   );
->>>>>>> f0b8beb980ea8bd869d71f636f41a691b9072b3e
+ f0b8beb980ea8bd869d71f636f41a691b9072b3e
 }

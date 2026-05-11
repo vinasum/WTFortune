@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "Fortune",
   "short_name": "Fortune",
@@ -19,4 +20,27 @@
       "purpose": "any maskable"
     }
   ]
+=======
+{
+  "name": "Fortune",
+  "short_name": "Fortune",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icon-v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+>>>>>>> f0b8beb980ea8bd869d71f636f41a691b9072b3e
 }

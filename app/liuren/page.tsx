@@ -6,14 +6,14 @@ import Link from "next/link";
 import DivinationForm from "./components/DivinationForm";
 import DivinationResult from "./components/DivinationResult";
 import { useLiurenEngine } from "./hooks/useLiurenEngine";
-import { LIUREN_MODE } from "@/lib/liurenMode";
+import { LIUREN_MODE, LiurenMode } from "@/lib/liurenMode";
 
 export default function LiurenPage() {
   const [question, setQuestion] = useState("");
   const [category, setCategory] = useState("感情");
 
   // ✔️ v2：統一 enum
-  const [mode, setMode] = useState(LIUREN_MODE.FATE);
+  const [mode, setMode] = useState<LiurenMode>(LIUREN_MODE.FATE);
 
   const {
     result,
@@ -36,7 +36,7 @@ export default function LiurenPage() {
   // ✔️ Step 4：reset 也要用 enum（已修正）
 const handleReset = () => {
   setQuestion("");
-  setMode(LIUREN_MODE.CAUSE); // ← Step 5 改這裡
+  setMode(LIUREN_MODE.FATE); // ← Step 5 改這裡
   reset();
 };
 

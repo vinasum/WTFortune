@@ -1,4 +1,4 @@
-import { LIUREN_MODE, LiurenMode } from "@/lib/liurenMode";
+import { LiurenMode, LIUREN_MODE } from "@/lib/liurenMode";
 
 type Props = {
   result: string | null;
@@ -21,26 +21,17 @@ export default function DivinationResult({
 
   return (
     <div className="
-      relative
-      mt-12
-      rounded-3xl
-      border border-[#2a2a2a]
-      bg-[#161616]
-      p-10
-      flex flex-col items-center
-      text-[#e8e2d6]
-
-      transition-all duration-300
+      relative mt-12 rounded-3xl border border-[#2a2a2a]
+      bg-[#161616] p-10 flex flex-col items-center
+      text-[#e8e2d6] transition-all duration-300
       shadow-[0_0_40px_rgba(0,0,0,0.45)]
       hover:border-[#b8aa8c]/70
       hover:shadow-[0_0_65px_rgba(184,170,140,0.12)]
     ">
 
-      {/* 背景光 */}
+      {/* 光層 */}
       <div className="
-        absolute inset-0
-        rounded-3xl
-        pointer-events-none
+        absolute inset-0 rounded-3xl pointer-events-none
         bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_60%)]
       " />
 
@@ -49,7 +40,7 @@ export default function DivinationResult({
         {lunarInfo}
       </p>
 
-      {/* 六神 */}
+      {/* 結果 */}
       <h2 className="relative text-6xl font-light mb-6 tracking-widest text-[#f5f1ea]">
         {result}
       </h2>
@@ -61,26 +52,53 @@ export default function DivinationResult({
         {description}
       </p>
 
-      {/* 解析模式（v2） */}
+      {/* 🧭 v3 人格切換 */}
       <div className="mb-8 w-full relative">
-
         <label className="block text-xs tracking-[0.2em] text-[#7d7668] mb-4 text-center">
-          解析模式
+          解讀人格
         </label>
 
         <div className="grid grid-cols-3 gap-3">
 
-<button onClick={() => setMode(LIUREN_MODE.FATE)}>
-  🪷 命理師
-</button>
+          <button
+            onClick={() => setMode(LIUREN_MODE.FATE)}
+            className={`
+              p-3 rounded-2xl border text-sm transition
+              ${mode === LIUREN_MODE.FATE
+                ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
+                : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
+              }
+            `}
+          >
+            🪷 命理師
+          </button>
 
-<button onClick={() => setMode(LIUREN_MODE.LOGIC)}>
-  🔥 理性
-</button>
+          <button
+            onClick={() => setMode(LIUREN_MODE.LOGIC)}
+            className={`
+              p-3 rounded-2xl border text-sm transition
+              ${mode === LIUREN_MODE.LOGIC
+                ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
+                : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
+              }
+            `}
+          >
+            🔥 理性
+          </button>
 
-<button onClick={() => setMode(LIUREN_MODE.PSYCHO)}>
-  🌌 心理
-</button>
+          <button
+            onClick={() => setMode(LIUREN_MODE.PSYCHO)}
+            className={`
+              p-3 rounded-2xl border text-sm transition
+              ${mode === LIUREN_MODE.PSYCHO
+                ? "bg-[#f5f1ea] text-[#111] border-[#f5f1ea]"
+                : "bg-[#111] text-[#f5f1ea] border-[#2a2a2a]"
+              }
+            `}
+          >
+            🌌 心理
+          </button>
+
         </div>
       </div>
 
@@ -88,20 +106,13 @@ export default function DivinationResult({
       <button
         onClick={onCopy}
         className="
-          relative
-          w-full
-          py-4
-          rounded-full
-          border border-[#b8aa8c]/40
-          bg-[#f5f1ea]
-          text-[#111]
-          font-medium
-
-          hover:bg-white
-          transition
+          relative w-full py-4 rounded-full
+          border border-[#b8aa8c]/40 bg-[#f5f1ea]
+          text-[#111] font-medium
+          hover:bg-white transition
         "
       >
-        複製你的AI神諭貼到ChatGPT
+        複製你的AI神諭貼到 ChatGPT
       </button>
 
     </div>

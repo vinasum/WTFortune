@@ -81,7 +81,7 @@ const handleReset = () => {
 
         {/* Result */}
         {result && (
-          <div className="rounded-3xl border border-[#2a2a2a] hover:border-[#b8aa8c] transition">
+  <div className="mt-6">
             <DivinationResult
               result={result}
               lunarInfo={lunarInfo}

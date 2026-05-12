@@ -37,10 +37,6 @@ export default function Home() {
             東方命理 × AI 神諭系統
           </p>
 
-          {/* 流程提示 */}
-          <p className="mt-4 text-sm text-[#8f8779]">
-            輸入數字 → 起卦 → 生成 AI 解讀與圖像提示
-          </p>
         </div>
 
         {/* 功能卡片 */}

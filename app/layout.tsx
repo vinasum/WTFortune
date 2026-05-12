@@ -13,41 +13,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fortune",
+  title: "What the Fortune",
   description: "命理快速占卜（陸續增加中）",
-  // 記得加入這行，連結 manifest.json
-  manifest: "/manifest.json", 
 
-  // 🌐 favicon + app icon
+  // 🌐 favicon + app icon（桌面/瀏覽器）
   icons: {
     icon: "/icon-v2.png",
     apple: "/apple-touch-icon-v2.png",
   },
 
-  // 📱 iOS 專用，控制加到主畫面的名稱
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Fortune",
-  },
-
-  // 📱 Open Graph
+  // 📱 Open Graph（LINE / FB / iMessage）
   openGraph: {
-    title: "Fortune",
+    title: "What the Fortune",
     description: "命理快速占卜（陸續增加中）",
     images: [
       {
         url: "/og.png",
-        width: 512,
-        height: 512,
+        width: 1200,
+        height: 630,
       },
     ],
   },
 
-  // 🐦 Twitter / X
+  // 🐦 Twitter / X 分享
   twitter: {
     card: "summary_large_image",
-    images: ["/og.png"],
+    images: ["/og-v2.png"],
   },
 };
 
@@ -58,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="zh-Hant"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

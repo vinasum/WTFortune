@@ -21,17 +21,21 @@ export default function DivinationResult({
 
   return (
     <div className="
-      relative mt-12 rounded-3xl border border-[#2a2a2a]
-      bg-[#161616] p-10 flex flex-col items-center
-      text-[#e8e2d6] transition-all duration-300
+      relative mt-12 rounded-3xl overflow-hidden
+      border border-[#2a2a2a]
+      bg-[#161616]
+      p-10 flex flex-col items-center
+      text-[#e8e2d6]
+      transition-all duration-300
       shadow-[0_0_40px_rgba(0,0,0,0.45)]
       hover:border-[#b8aa8c]/70
       hover:shadow-[0_0_65px_rgba(184,170,140,0.12)]
     ">
 
-      {/* 光層 */}
+      {/* 光層（改成 clipped，不再溢出造成雙框感） */}
       <div className="
-        absolute inset-0 rounded-3xl pointer-events-none
+        absolute inset-0
+        pointer-events-none
         bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_60%)]
       " />
 
@@ -107,7 +111,8 @@ export default function DivinationResult({
         onClick={onCopy}
         className="
           relative w-full py-4 rounded-full
-          border border-[#b8aa8c]/40 bg-[#f5f1ea]
+          border border-[#b8aa8c]/40
+          bg-[#f5f1ea]
           text-[#111] font-medium
           hover:bg-white transition
         "

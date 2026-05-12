@@ -1,12 +1,41 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "What the Fortune",
+          text: "我發現一個很特別的神諭占卜網站",
+          url: window.location.origin,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.origin);
+        alert("網站網址已複製");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#111111] text-[#f5f1ea]">
       
       {/* 背景 */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)]" />
+
+      {/* 分享按鈕 */}
+      <div className="absolute right-5 top-5 z-30">
+        <button
+          onClick={handleShare}
+          className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-white/80 backdrop-blur-xl transition-all duration-300 hover:border-[#cdbb94]/40 hover:bg-black/40 hover:text-white"
+        >
+          分享
+        </button>
+      </div>
 
       {/* 主內容 */}
       <div className="relative z-10 flex flex-col items-center px-6 py-20">
@@ -28,19 +57,18 @@ export default function Home() {
         </div>
 
         {/* 標題 */}
-        <div className="text-center max-w-2xl">
-          <h1 className="text-4xl md:text-6xl font-light leading-tight tracking-wide">
+        <div className="max-w-2xl text-center">
+          <h1 className="text-4xl font-light leading-tight tracking-wide md:text-6xl">
             聽聽未來怎麼說？
           </h1>
 
-          <p className="mt-6 text-[#b3ab9d] text-lg md:text-xl leading-relaxed">
+          <p className="mt-6 text-lg leading-relaxed text-[#b3ab9d] md:text-xl">
             東方命理 × AI 神諭系統
           </p>
-
         </div>
 
         {/* 功能卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-24 w-full max-w-5xl">
+        <div className="mt-24 grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
           
           {/* 小六壬 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)] backdrop-blur-xl transition-all duration-300 hover:border-[#b8aa8c]/60 hover:bg-white/[0.07] hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">

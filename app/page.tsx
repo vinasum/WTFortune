@@ -131,7 +131,7 @@ export default function Home() {
             </h2>
 
             <p className="relative z-10 text-[#a8a091] text-center md:text-left">
-              數字起卦 × AI 解讀生成
+              數字起卦 × 複雜狀態卦象解讀
             </p>
 
             <Link

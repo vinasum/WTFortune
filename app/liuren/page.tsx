@@ -34,11 +34,11 @@ export default function LiurenPage() {
   };
 
   // ✔️ Step 4：reset 也要用 enum（已修正）
-const handleReset = () => {
-  setQuestion("");
-  setMode(LIUREN_MODE.FATE); // ← Step 5 改這裡
-  reset();
-};
+  const handleReset = () => {
+    setQuestion("");
+    setMode(LIUREN_MODE.FATE);
+    reset();
+  };
 
   return (
     <main className="min-h-screen bg-[#111111] text-[#f5f1ea] py-20 px-6">
@@ -65,7 +65,17 @@ const handleReset = () => {
 
         {/* 標題 */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-light">小六壬測算</h1>
+          <h1 className="text-4xl font-light mb-6">
+            小六壬測算
+          </h1>
+
+          {/* 提示文字 */}
+          <div className="rounded-2xl border border-[#2a2a2a] bg-[#171717] px-5 py-4 text-left">
+            <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
+              小六壬以「起心動念」之時起卦。<br />
+              同一時辰內結果通常一致，建議避免短時間內重複占問相同問題。
+            </p>
+          </div>
         </div>
 
         {/* Form */}
@@ -81,7 +91,7 @@ const handleReset = () => {
 
         {/* Result */}
         {result && (
-  <div className="mt-6">
+          <div className="mt-6">
             <DivinationResult
               result={result}
               lunarInfo={lunarInfo}

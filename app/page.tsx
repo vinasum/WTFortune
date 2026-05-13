@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#111111] text-[#f5f1ea]">
-      
+
       {/* 背景 */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)]" />
 
@@ -39,7 +39,7 @@ export default function Home() {
 
       {/* 主內容 */}
       <div className="relative z-10 flex flex-col items-center px-6 py-20">
-        
+
         {/* Logo */}
         <div className="mb-10 flex flex-col items-center">
           <Image
@@ -69,19 +69,28 @@ export default function Home() {
 
         {/* 功能卡片 */}
         <div className="mt-24 grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
-          
+
           {/* 小六壬 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)] backdrop-blur-xl transition-all duration-300 hover:border-[#b8aa8c]/60 hover:bg-white/[0.07] hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
-            
+
             <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent" />
 
-            <div className="relative z-10 mb-5 text-4xl">🌙</div>
+            {/* ICON */}
+            <div className="relative z-10 mb-5 flex justify-center">
+              <Image
+                src="/icons/divination/liuren.png"
+                alt="小六壬"
+                width={256}
+                height={256}
+                className="w-40 h-40 object-contain scale-180"
+              />
+            </div>
 
-            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide">
+            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide text-center md:text-left">
               小六壬占卜
             </h2>
 
-            <p className="relative z-10 leading-relaxed text-[#a8a091]">
+            <p className="relative z-10 leading-relaxed text-[#a8a091] text-center md:text-left">
               適合感情、工作、人際與近期事件快速觀測。
             </p>
 
@@ -95,16 +104,25 @@ export default function Home() {
 
           {/* 易數流卦 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)] backdrop-blur-xl transition-all duration-300 hover:border-[#b8aa8c]/60 hover:bg-white/[0.07] hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
-            
+
             <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent" />
 
-            <div className="relative z-10 mb-5 text-4xl">🔢</div>
+            {/* ICON */}
+            <div className="relative z-10 mb-5 flex justify-center">
+              <Image
+                src="/icons/divination/yishu.png"
+                alt="易數流卦"
+                width={256}
+                height={256}
+                className="w-40 h-40 object-contain scale-110"
+              />
+            </div>
 
-            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide">
+            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide text-center md:text-left">
               易數流卦
             </h2>
 
-            <p className="relative z-10 leading-relaxed text-[#a8a091]">
+            <p className="relative z-10 leading-relaxed text-[#a8a091] text-center md:text-left">
               數字起卦 × 狀態感知 × AI 解讀生成系統。
             </p>
 
@@ -140,6 +158,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </div>
     </main>
   );

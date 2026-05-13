@@ -63,7 +63,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 text-lg leading-relaxed text-[#b3ab9d] md:text-xl">
-            東方命理 × AI 神諭系統
+            東西方命理快占 × AI 神諭圖卡系統
           </p>
         </div>
 

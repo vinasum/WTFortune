@@ -37,12 +37,12 @@ export default function Home() {
         </button>
       </div>
 
-      {/* ================= HERO (LCP LOCK ZONE) ================= */}
+      {/* ================= HERO ================= */}
       <section className="relative z-10 flex flex-col items-center px-6 pt-24">
 
-        {/* LCP ANCHOR CONTAINER */}
-        <div className="flex flex-col items-center h-[260px] justify-center">
-          
+        {/* HERO container（已取消 h 固定 + justify-center） */}
+        <div className="flex flex-col items-center pt-6">
+
           <Image
             src="/logo.png"
             alt="What the Fortune"
@@ -58,21 +58,21 @@ export default function Home() {
           </p>
         </div>
 
-        {/* headline */}
-        <div className="max-w-2xl text-center mt-2">
+        {/* headline（縮距離） */}
+        <div className="max-w-2xl text-center mt-0">
           <h1 className="text-4xl font-light md:text-6xl">
             聽聽未來怎麼說？
           </h1>
 
-          <p className="mt-6 text-lg text-[#b3ab9d] md:text-xl">
+          <p className="mt-5 text-lg text-[#b3ab9d] md:text-xl">
             東西方命理快占 × AI 神諭圖卡系統
           </p>
         </div>
 
-        {/* 🔥 CRITICAL: push cards OUT of LCP window */}
-        <div className="h-44 md:h-56" />
+        {/* spacer（縮短） */}
+        <div className="h-6 md:h-10" />
 
-        {/* ================= CARDS (NON-LCP ZONE) ================= */}
+        {/* ================= CARDS ================= */}
         <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 opacity-90">
 
           {/* card 1 */}
@@ -89,7 +89,6 @@ export default function Home() {
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
-                style={{ contentVisibility: "auto" }}
                 className="w-24 h-24"
               />
             </div>
@@ -123,7 +122,6 @@ export default function Home() {
                 height={150}
                 loading="lazy"
                 fetchPriority="low"
-                style={{ contentVisibility: "auto" }}
                 className="w-24 h-24"
               />
             </div>
@@ -146,7 +144,7 @@ export default function Home() {
         </section>
 
         {/* ================= COMING SOON ================= */}
-        <div className="mt-44 w-full max-w-5xl">
+        <div className="mt-32 w-full max-w-5xl">
           <p className="mb-10 text-center text-sm tracking-[0.35em] text-[#7d7668]">
             COMING SOON
           </p>

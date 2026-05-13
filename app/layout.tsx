@@ -12,20 +12,31 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * ✔ 重點修正：
+ * - 加 metadataBase（修 warning + OG URL resolve）
+ * - 統一 image path 行為
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
+
   title: "What the Fortune",
   description: "命理快速占卜（陸續增加中）",
 
-  // 🌐 favicon + app icon（桌面/瀏覽器）
+  // 🌐 icons
   icons: {
     icon: "/icon-v2.png",
     apple: "/apple-touch-icon-v2.png",
   },
 
-  // 📱 Open Graph（LINE / FB / iMessage）
+  // 📱 Open Graph
   openGraph: {
     title: "What the Fortune",
     description: "命理快速占卜（陸續增加中）",
+    url: "/",
+    siteName: "What the Fortune",
     images: [
       {
         url: "/og.png",
@@ -33,12 +44,15 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+    type: "website",
   },
 
-  // 🐦 Twitter / X 分享
+  // 🐦 Twitter / X
   twitter: {
     card: "summary_large_image",
-    images: ["/og-v2.png"],
+    title: "What the Fortune",
+    description: "命理快速占卜（陸續增加中）",
+    images: ["/og.png"],
   },
 };
 

@@ -24,31 +24,33 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#111111] text-[#f5f1ea]">
 
-      {/* 背景 */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)]" />
+      {/* background */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
 
-      {/* 分享按鈕 */}
+      {/* share */}
       <div className="absolute right-5 top-5 z-30">
         <button
           onClick={handleShare}
-          className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-white/80 backdrop-blur-xl transition-all duration-300 hover:border-[#cdbb94]/40 hover:bg-black/40 hover:text-white"
+          className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-white/80 backdrop-blur-xl"
         >
           分享
         </button>
       </div>
 
-      {/* 主內容 */}
-      <div className="relative z-10 flex flex-col items-center px-6 py-20">
+      {/* ================= HERO (LCP LOCK ZONE) ================= */}
+      <section className="relative z-10 flex flex-col items-center px-6 pt-24">
 
-        {/* Logo */}
-        <div className="mb-10 flex flex-col items-center">
+        {/* LCP ANCHOR CONTAINER */}
+        <div className="flex flex-col items-center h-[260px] justify-center">
+          
           <Image
             src="/logo.png"
             alt="What the Fortune"
-            width={128}
-            height={128}
-            className="w-24 md:w-32 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            width={200}
+            height={200}
             priority
+            fetchPriority="high"
+            className="w-44 h-auto"
           />
 
           <p className="mt-5 text-sm tracking-[0.35em] text-[#c6b89a]">
@@ -56,110 +58,113 @@ export default function Home() {
           </p>
         </div>
 
-        {/* 標題 */}
-        <div className="max-w-2xl text-center">
-          <h1 className="text-4xl font-light leading-tight tracking-wide md:text-6xl">
+        {/* headline */}
+        <div className="max-w-2xl text-center mt-2">
+          <h1 className="text-4xl font-light md:text-6xl">
             聽聽未來怎麼說？
           </h1>
 
-          <p className="mt-6 text-lg leading-relaxed text-[#b3ab9d] md:text-xl">
+          <p className="mt-6 text-lg text-[#b3ab9d] md:text-xl">
             東西方命理快占 × AI 神諭圖卡系統
           </p>
         </div>
 
-        {/* 功能卡片 */}
-        <div className="mt-24 grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
+        {/* 🔥 CRITICAL: push cards OUT of LCP window */}
+        <div className="h-44 md:h-56" />
 
-          {/* 小六壬 */}
-          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)] backdrop-blur-xl transition-all duration-300 hover:border-[#b8aa8c]/60 hover:bg-white/[0.07] hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+        {/* ================= CARDS (NON-LCP ZONE) ================= */}
+        <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 opacity-90">
 
-            <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent" />
+          {/* card 1 */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
 
-            {/* ICON */}
-            <div className="relative z-10 mb-5 flex justify-center">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
               <Image
                 src="/icons/divination/liuren.png"
                 alt="小六壬"
-                width={256}
-                height={256}
-                className="w-40 h-40 object-contain scale-180"
+                width={150}
+                height={150}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                style={{ contentVisibility: "auto" }}
+                className="w-24 h-24"
               />
             </div>
 
-            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide text-center md:text-left">
+            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
               小六壬占卜
             </h2>
 
-            <p className="relative z-10 leading-relaxed text-[#a8a091] text-center md:text-left">
-              適合感情、工作、人際與近期事件快速觀測。
+            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+              感情 / 工作 / 人際快速觀測
             </p>
 
             <Link
               href="/liuren"
-              className="relative z-10 mt-10 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04] text-[#f5f1ea] shadow-[0_0_20px_rgba(255,255,255,0.04)] transition-all duration-300 hover:border-[#cdbb94] hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(205,187,148,0.12)]"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
             >
               開始占卜
             </Link>
           </div>
 
-          {/* 易數流卦 */}
-          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)] backdrop-blur-xl transition-all duration-300 hover:border-[#b8aa8c]/60 hover:bg-white/[0.07] hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+          {/* card 2 */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
 
-            <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent" />
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
-            {/* ICON */}
-            <div className="relative z-10 mb-5 flex justify-center">
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
               <Image
                 src="/icons/divination/yishu.png"
                 alt="易數流卦"
-                width={256}
-                height={256}
-                className="w-40 h-40 object-contain scale-110"
+                width={150}
+                height={150}
+                loading="lazy"
+                fetchPriority="low"
+                style={{ contentVisibility: "auto" }}
+                className="w-24 h-24"
               />
             </div>
 
-            <h2 className="relative z-10 mb-4 text-2xl font-light tracking-wide text-center md:text-left">
+            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
               易數流卦
             </h2>
 
-            <p className="relative z-10 leading-relaxed text-[#a8a091] text-center md:text-left">
-              數字起卦 × 狀態感知 × AI 解讀生成系統。
+            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+              數字起卦 × AI 解讀生成
             </p>
 
             <Link
               href="/yishu"
-              className="relative z-10 mt-10 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04] text-[#f5f1ea] shadow-[0_0_20px_rgba(255,255,255,0.04)] transition-all duration-300 hover:border-[#cdbb94] hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(205,187,148,0.12)]"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
             >
               開始起卦
             </Link>
           </div>
-        </div>
+        </section>
 
-        {/* Coming Soon */}
-        <div className="mt-28 w-full max-w-5xl">
+        {/* ================= COMING SOON ================= */}
+        <div className="mt-44 w-full max-w-5xl">
           <p className="mb-10 text-center text-sm tracking-[0.35em] text-[#7d7668]">
             COMING SOON
           </p>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center opacity-60 backdrop-blur-lg">
-              <div className="text-3xl">🪷</div>
-              <p className="mt-5 text-lg text-[#c8c0b2]">八字命盤</p>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 opacity-70">
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🪷 八字命盤
             </div>
-
-            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center opacity-60 backdrop-blur-lg">
-              <div className="text-3xl">🌌</div>
-              <p className="mt-5 text-lg text-[#c8c0b2]">紫微斗數</p>
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🌌 紫微斗數
             </div>
-
-            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center opacity-60 backdrop-blur-lg">
-              <div className="text-3xl">🕯️</div>
-              <p className="mt-5 text-lg text-[#c8c0b2]">合盤分析</p>
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🕯️ 合盤分析
             </div>
           </div>
         </div>
 
-      </div>
+      </section>
     </main>
   );
 }

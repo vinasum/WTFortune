@@ -40,7 +40,7 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="relative z-10 flex flex-col items-center px-6 pt-24">
 
-        {/* HERO container（已取消 h 固定 + justify-center） */}
+        {/* HERO block */}
         <div className="flex flex-col items-center pt-6">
 
           <Image
@@ -53,23 +53,27 @@ export default function Home() {
             className="w-44 h-auto"
           />
 
-          <p className="mt-5 text-sm tracking-[0.35em] text-[#c6b89a]">
+          {/* ✔ BRAND → headline spacing（已加大） */}
+          <p className="mt-8 text-sm tracking-[0.35em] text-[#c6b89a]">
             WHAT THE FORTUNE
           </p>
         </div>
 
-        {/* headline（縮距離） */}
+        {/* ✔ MIDDLE SPACER（關鍵：改成呼吸段） */}
+        <div className="h-10 md:h-14" />
+
+        {/* headline */}
         <div className="max-w-2xl text-center mt-0">
           <h1 className="text-4xl font-light md:text-6xl">
             聽聽未來怎麼說？
           </h1>
 
-          <p className="mt-5 text-lg text-[#b3ab9d] md:text-xl">
+          <p className="mt-6 text-lg text-[#b3ab9d] md:text-xl">
             東西方命理快占 × AI 神諭圖卡系統
           </p>
         </div>
 
-        {/* spacer（縮短） */}
+        {/* spacer（卡片距離） */}
         <div className="h-6 md:h-10" />
 
         {/* ================= CARDS ================= */}

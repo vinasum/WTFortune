@@ -297,133 +297,141 @@ ${question || "無"}
 `
     : "";
 
-  return (
-    <div className="min-h-screen bg-[#111111] text-[#f5f1ea] flex items-center justify-center px-6 py-20">
+return (
+  <div className="relative min-h-screen text-[#f5f1ea] flex items-center justify-center px-6 py-20 overflow-hidden">
 
-      <div className="w-full max-w-2xl relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] backdrop-blur-xl p-8 shadow-[0_0_40px_rgba(255,255,255,0.04)]">
+    {/* 背景圖 */}
+<div
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: "url('/backgrounds/yishu-bg.png')",
+  }}
+/>
 
-        <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent" />
+    <div className="w-full max-w-2xl relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 shadow-[0_0_40px_rgba(255,255,255,0.03)]">
 
-        <div className="relative z-10">
+      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent" />
 
-          <div className="flex justify-between items-center mb-6 text-sm text-[#bdb6aa]">
-            <button onClick={() => router.push("/")}>
-              ← 返回首頁
-            </button>
+      <div className="relative z-10">
 
-            <button onClick={resetAll}>
-              重新開始
-            </button>
-          </div>
-
-          <h1 className="text-3xl font-light tracking-wide mb-8">
-            易數流卦
-          </h1>
-
-          {/* 提示文字 */}
-<div className="mb-8 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
-  <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
-    卦象並非預言，而是當下心念與天地流轉的映照。<br />
-    當念頭成形之際，卦亦隨之成立。請保持專注與真誠，避免執念反覆測算。
-  </p>
-</div>
-
-          <div className="space-y-3 mb-6">
-
-            <input
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10"
-              placeholder="數字1"
-              value={n1}
-              onChange={(e) => {
-                const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
-                setN1(onlyNumbers);
-              }}
-              onBlur={() => setN1((prev) => prev.replace(/[^0-9]/g, ""))}
-            />
-
-            <input
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10"
-              placeholder="數字2"
-              value={n2}
-              onChange={(e) => {
-                const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
-                setN2(onlyNumbers);
-              }}
-              onBlur={() => setN2((prev) => prev.replace(/[^0-9]/g, ""))}
-            />
-
-            <input
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10"
-              placeholder="問題（可選）"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-            />
-
-          </div>
-
-          <button
-            onClick={handleDivination}
-            disabled={loading}
-            className="w-full h-12 rounded-full border border-[#5a5246] bg-white/[0.04] text-[#f5f1ea] hover:border-[#cdbb94] hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(205,187,148,0.12)] transition-all duration-300"
-          >
-            {loading ? "測算中..." : "執行測算"}
+        <div className="flex justify-between items-center mb-6 text-sm text-[#bdb6aa]">
+          <button onClick={() => router.push("/")}>
+            ← 返回首頁
           </button>
 
-          {result && (
-            <div className="mt-8">
+          <button onClick={resetAll}>
+            重新開始
+          </button>
+        </div>
 
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+        <h1 className="text-3xl font-light tracking-wide mb-8">
+          易數流卦
+        </h1>
 
-                <div className="text-lg mb-4">卦象結果</div>
+        {/* 提示文字 */}
+        <div className="mb-8 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
+            卦象並非預言，而是當下心念與天地流轉的映照。<br />
+            請真誠接受答案和指引，避免執著多次測算。
+          </p>
+        </div>
 
-                <div className="flex justify-between mb-6">
+        <div className="space-y-3 mb-6">
 
-                  <div className="text-center">
-                    <div className="text-sm text-[#a8a091]">上卦</div>
-                    <div className="text-2xl">{result.gua?.upper}</div>
-                  </div>
+          <input
+            className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-sm"
+            placeholder="數字1"
+            value={n1}
+            onChange={(e) => {
+              const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
+              setN1(onlyNumbers);
+            }}
+            onBlur={() => setN1((prev) => prev.replace(/[^0-9]/g, ""))}
+          />
 
-                  <div className="text-center">
-                    <div className="text-xs text-[#7f776b]">卦名</div>
-                    <div className="text-xl">{result.meta?.name}</div>
-                  </div>
+          <input
+            className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-sm"
+            placeholder="數字2"
+            value={n2}
+            onChange={(e) => {
+              const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
+              setN2(onlyNumbers);
+            }}
+            onBlur={() => setN2((prev) => prev.replace(/[^0-9]/g, ""))}
+          />
 
-                  <div className="text-center">
-                    <div className="text-sm text-[#a8a091]">下卦</div>
-                    <div className="text-2xl">{result.gua?.lower}</div>
-                  </div>
+          <input
+            className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-sm"
+            placeholder="問題（可選）"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
 
+        </div>
+
+        <button
+          onClick={handleDivination}
+          disabled={loading}
+          className="w-full h-12 rounded-full border border-[#5a5246] bg-white/[0.03] text-[#f5f1ea] hover:border-[#cdbb94] hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(205,187,148,0.10)] transition-all duration-300"
+        >
+          {loading ? "測算中..." : "執行測算"}
+        </button>
+
+        {result && (
+          <div className="mt-8">
+
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md">
+
+              <div className="text-lg mb-4">卦象結果</div>
+
+              <div className="flex justify-between mb-6">
+
+                <div className="text-center">
+                  <div className="text-sm text-[#a8a091]">上卦</div>
+                  <div className="text-2xl">{result.gua?.upper}</div>
                 </div>
 
-                <div className="text-sm mb-2">
-                  動爻：第 {result.gua?.movingLine} 爻
+                <div className="text-center">
+                  <div className="text-xs text-[#7f776b]">卦名</div>
+                  <div className="text-xl">{result.meta?.name}</div>
                 </div>
 
-                <div className="text-sm mb-4 text-[#bfb7a8]">
-                  {result.meta?.meaning}
-                </div>
-
-                <div className="pt-4 border-t border-white/10">
-
-                  <div className="text-sm mb-3">
-                    取得卦象
-                  </div>
-
-                  <button
-                    onClick={() => navigator.clipboard.writeText(aiPrompt)}
-                    className="w-full h-11 rounded-full border border-[#5a5246] bg-white/[0.04] hover:border-[#cdbb94] hover:bg-white/[0.08] transition"
-                  >
-                    複製你的AI神諭貼到ChatGPT
-                  </button>
-
+                <div className="text-center">
+                  <div className="text-sm text-[#a8a091]">下卦</div>
+                  <div className="text-2xl">{result.gua?.lower}</div>
                 </div>
 
               </div>
-            </div>
-          )}
 
-        </div>
+              <div className="text-sm mb-2">
+                動爻：第 {result.gua?.movingLine} 爻
+              </div>
+
+              <div className="text-sm mb-4 text-[#bfb7a8]">
+                {result.meta?.meaning}
+              </div>
+
+              <div className="pt-4 border-t border-white/10">
+
+                <div className="text-sm mb-3">
+                  取得卦象
+                </div>
+
+                <button
+                  onClick={() => navigator.clipboard.writeText(aiPrompt)}
+                  className="w-full h-11 rounded-full border border-[#5a5246] bg-white/[0.03] hover:border-[#cdbb94] hover:bg-white/[0.06] transition"
+                >
+                  複製你的AI神諭貼到ChatGPT
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
-  );
-}
+  </div>
+
+);}

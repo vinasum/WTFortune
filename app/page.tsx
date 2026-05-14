@@ -50,7 +50,7 @@ export default function Home() {
             height={200}
             priority
             fetchPriority="high"
-            className="w-44 h-auto"
+            className="w-36 h-auto"
           />
 
           {/* ✔ BRAND → headline spacing（已加大） */}

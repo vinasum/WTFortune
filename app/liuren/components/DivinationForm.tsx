@@ -44,29 +44,32 @@ export default function DivinationForm({
 
       {/* 🧠 輸入問題 */}
       <div className="relative">
-        <label className="block text-sm tracking-[0.2em] text-[#b8aa8c] mb-4">
-          輸入問題
-        </label>
 
-        <input
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          className="
-            w-full
-            rounded-2xl
+<input
+  value={question}
+  onChange={(e) => setQuestion(e.target.value)}
+  placeholder="輸入你的問題（例如：感情、工作、選擇）"
 
-            bg-[#111]/70
-            backdrop-blur-sm
+  className="
+    w-full
 
-            border border-[#2a2a2a]
-            p-4
-            text-[#f5f1ea]
+    rounded-2xl
 
-            focus:outline-none
-            focus:border-[#b8aa8c]/30
-            transition
-          "
-        />
+    bg-white/[0.03]
+    border border-white/10
+
+    p-4
+    text-[#f5f1ea]
+
+    backdrop-blur-md
+
+    focus:outline-none
+    focus:border-[#b8aa8c]/60
+    focus:bg-white/[0.05]
+
+    transition
+  "
+/>
       </div>
 
       {/* 🧭 分類 */}

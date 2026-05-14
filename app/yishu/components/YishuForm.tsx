@@ -42,7 +42,7 @@ export default function YishuForm({
         shadow-[0_0_35px_rgba(0,0,0,0.25)]
       "
     >
-
+      {/* 數字1 */}
       <input
         className="
           w-full
@@ -61,11 +61,10 @@ export default function YishuForm({
           const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
           setN1(onlyNumbers);
         }}
-        onBlur={() =>
-          setN1((prev) => prev.replace(/[^0-9]/g, ""))
-        }
+        onBlur={() => setN1(n1.replace(/[^0-9]/g, ""))}
       />
 
+      {/* 數字2 */}
       <input
         className="
           w-full
@@ -84,11 +83,10 @@ export default function YishuForm({
           const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
           setN2(onlyNumbers);
         }}
-        onBlur={() =>
-          setN2((prev) => prev.replace(/[^0-9]/g, ""))
-        }
+        onBlur={() => setN2(n2.replace(/[^0-9]/g, ""))}
       />
 
+      {/* 問題 */}
       <input
         className="
           w-full
@@ -106,6 +104,7 @@ export default function YishuForm({
         onChange={(e) => setQuestion(e.target.value)}
       />
 
+      {/* 按鈕 */}
       <button
         onClick={onSubmit}
         disabled={loading}
@@ -127,7 +126,6 @@ export default function YishuForm({
       >
         {loading ? "測算中..." : "執行測算"}
       </button>
-
     </div>
   );
 }

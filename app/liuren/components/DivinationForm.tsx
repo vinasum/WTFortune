@@ -1,3 +1,11 @@
+type Props = {
+  question: string;
+  setQuestion: (v: string) => void;
+  category: string;
+  setCategory: (v: string) => void;
+  onSubmit: () => void;
+};
+
 export default function DivinationForm({
   question,
   setQuestion,

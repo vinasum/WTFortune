@@ -1,11 +1,3 @@
-type Props = {
-  question: string;
-  setQuestion: (v: string) => void;
-  category: string;
-  setCategory: (v: string) => void;
-  onSubmit: () => void;
-};
-
 export default function DivinationForm({
   question,
   setQuestion,
@@ -18,7 +10,10 @@ export default function DivinationForm({
       relative
       space-y-8
       text-left
-      bg-[#181818]
+
+      bg-[#181818]/30
+      backdrop-blur-md
+
       p-8
       rounded-3xl
       border border-[#2a2a2a]
@@ -31,12 +26,12 @@ export default function DivinationForm({
       hover:shadow-[0_0_55px_rgba(184,170,140,0.12)]
     ">
 
-      {/* ✨ 霧面光層（關鍵補強） */}
+      {/* ✨ 霧面光層 */}
       <div className="
         absolute inset-0
         rounded-3xl
         pointer-events-none
-        bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_60%)]
+        bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_35%)]
       " />
 
       {/* 🧠 輸入問題 */}
@@ -51,13 +46,16 @@ export default function DivinationForm({
           className="
             w-full
             rounded-2xl
-            bg-[#111]
+
+            bg-[#111]/70
+            backdrop-blur-sm
+
             border border-[#2a2a2a]
             p-4
             text-[#f5f1ea]
 
             focus:outline-none
-            focus:border-[#b8aa8c]/60
+            focus:border-[#b8aa8c]/30
             transition
           "
         />
@@ -75,13 +73,16 @@ export default function DivinationForm({
           className="
             w-full
             rounded-2xl
-            bg-[#111]
+
+            bg-[#111]/70
+            backdrop-blur-sm
+
             border border-[#2a2a2a]
             p-4
             text-[#f5f1ea]
 
             focus:outline-none
-            focus:border-[#b8aa8c]/60
+            focus:border-[#b8aa8c]/30
             transition
           "
         >
@@ -100,12 +101,16 @@ export default function DivinationForm({
           relative
           w-full
           rounded-full
+
+          bg-[#181818]/30
+          backdrop-blur-sm
+
           border border-[#3a2f1f]
           py-4
           text-[#f5f1ea]
 
           hover:border-[#b8aa8c]/70
-          hover:bg-[#1f1f1f]
+          hover:bg-[#1f1f1f]/70
 
           transition
         "

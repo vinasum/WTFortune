@@ -52,11 +52,6 @@ export default function Home() {
             fetchPriority="high"
             className="w-36 h-auto"
           />
-
-          {/* ✔ BRAND → headline spacing（已加大） */}
-          <p className="mt-8 text-sm tracking-[0.35em] text-[#c6b89a]">
-            WHAT THE FORTUNE
-          </p>
         </div>
 
         {/* ✔ MIDDLE SPACER（關鍵：改成呼吸段） */}
@@ -90,7 +85,7 @@ export default function Home() {
                 alt="小六壬"
                 width={150}
                 height={150}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
                 fetchPriority="low"
                 className="w-24 h-24"
@@ -124,7 +119,7 @@ export default function Home() {
                 alt="易數流卦"
                 width={150}
                 height={150}
-                loading="lazy"
+                loading="eager"
                 fetchPriority="low"
                 className="w-24 h-24"
               />

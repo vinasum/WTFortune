@@ -60,14 +60,19 @@ export default function RootLayout({
       lang="zh-Hant"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen bg-[#0b0b0b] text-white">
+      <body className="min-h-screen bg-[#0b0b0b] text-white overflow-x-hidden">
+        
         <Sidebar />
         <Mobilesidebar />
 
+        {/* 🔽 關鍵修改：移除全域 padding，只保留 sidebar offset */}
         <main className="md:pl-64 min-h-screen">
-          <div className="p-4 md:p-8">
+          
+          {/* 原本 p-4 md:p-8 → 改成更小的上方 padding */}
+          <div className="px-4 pt-2 pb-10 md:px-8 md:pt-4">
             {children}
           </div>
+
         </main>
       </body>
     </html>

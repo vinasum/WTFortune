@@ -15,6 +15,9 @@ export default function MobileSidebar() {
         : "text-white/70 hover:text-white hover:bg-white/5"
     }`;
 
+  const sectionTitle =
+    "px-3 py-2 text-[11px] tracking-[0.2em] text-white/30";
+
   return (
     <>
       {/* Top Bar */}
@@ -47,6 +50,7 @@ export default function MobileSidebar() {
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        {/* Brand */}
         <div className="flex items-center justify-between p-4 border-b border-white/10">
           <div className="text-white font-semibold">
             What the Fortune
@@ -60,38 +64,70 @@ export default function MobileSidebar() {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 p-4">
-          <Link
-            href="/"
-            className={linkClass("/")}
-            onClick={() => setOpen(false)}
-          >
-            首頁
-          </Link>
+        {/* Nav */}
+        <nav className="flex flex-col p-4 text-sm">
 
-          <Link
-            href="/liuren"
-            className={linkClass("/liuren")}
-            onClick={() => setOpen(false)}
-          >
-            小六壬
-          </Link>
+          {/* 首頁 */}
+          <div className="mb-6">
+            <Link
+              href="/"
+              className={linkClass("/")}
+              onClick={() => setOpen(false)}
+            >
+              首頁
+            </Link>
+          </div>
 
-          <Link
-            href="/yishu"
-            className={linkClass("/yishu")}
-            onClick={() => setOpen(false)}
-          >
-            易數流卦
-          </Link>
+          {/* 占卜 */}
+          <div className="mb-6">
+            <div className={sectionTitle}>占卜</div>
 
-          <Link
-            href="/lenormand"
-            className={linkClass("/lenormand")}
-            onClick={() => setOpen(false)}
-          >
-            雷諾曼（預留）
-          </Link>
+            <div className="flex flex-col gap-1">
+              <Link
+                href="/liuren"
+                className={linkClass("/liuren")}
+                onClick={() => setOpen(false)}
+              >
+                小六壬
+              </Link>
+
+              <Link
+                href="/yishu"
+                className={linkClass("/yishu")}
+                onClick={() => setOpen(false)}
+              >
+                易數流卦
+              </Link>
+
+              <Link
+                href="/lenormand"
+                className={linkClass("/lenormand")}
+                onClick={() => setOpen(false)}
+              >
+                雷諾曼（預留）
+              </Link>
+            </div>
+          </div>
+
+          {/* 命理 */}
+          <div className="mb-6">
+            <div className={sectionTitle}>命理</div>
+
+            <div className="px-3 py-2 text-white/40 text-sm">
+              COMING SOON
+            </div>
+          </div>
+
+          {/* 關於我 */}
+          <div>
+            <div className={sectionTitle}>關於我</div>
+
+            <div className="px-3 py-2 text-white/40 text-sm leading-relaxed">
+              之後將放置論命預約連結<br />
+              以及 YT / IG / Threads
+            </div>
+          </div>
+
         </nav>
       </aside>
     </>

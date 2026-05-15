@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* ================= HERO ================= */}
-      <section className="relative z-10 flex flex-col items-center px-6 pt-24">
+      <section className="relative z-10 flex flex-col items-center px-6 pt-10 md:pt-12">
 
         {/* HERO block */}
         <div className="flex flex-col items-center pt-6">
@@ -50,7 +50,7 @@ export default function Home() {
             height={200}
             priority
             fetchPriority="high"
-            className="w-36 h-auto"
+            className="w-36 h-auto -translate-y-2 md:-translate-y-3"
           />
         </div>
 

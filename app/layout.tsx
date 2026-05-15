@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,31 +49,6 @@ export const metadata: Metadata = {
   },
 };
 
-function Sidebar() {
-  return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#0f0f0f] border-r border-white/10">
-      <div className="p-4 text-white font-semibold text-lg">
-        What the Fortune
-      </div>
-
-      <nav className="flex flex-col gap-2 p-4 text-sm text-white/80">
-        <a href="/" className="hover:text-white">
-          首頁
-        </a>
-        <a href="/liuren" className="hover:text-white">
-          小六壬
-        </a>
-        <a href="/yishu" className="hover:text-white">
-          易數流卦
-        </a>
-        <a href="/lenormand" className="hover:text-white">
-          雷諾曼（預留）
-        </a>
-      </nav>
-    </aside>
-  );
-}
-
 export default function RootLayout({
   children,
 }: {
@@ -86,9 +62,10 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#0b0b0b] text-white">
         <Sidebar />
 
-        {/* 主內容區 */}
         <main className="md:pl-64 min-h-screen">
-          <div className="p-4 md:p-8">{children}</div>
+          <div className="p-4 md:p-8">
+            {children}
+          </div>
         </main>
       </body>
     </html>

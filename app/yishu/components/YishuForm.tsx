@@ -99,7 +99,7 @@ export default function YishuForm({
 
           backdrop-blur-sm
         "
-        placeholder="問題（可選）"
+        placeholder="問題（建議填寫）"
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
       />

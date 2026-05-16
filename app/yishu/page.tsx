@@ -153,7 +153,7 @@ ${question || "無"}
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm px-5 py-4 text-left">
               <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
                 卦象並非預言，而是當下心念與天地流轉的映照。<br />
-                請真誠接受答案和指引，避免執著多次測算。
+                請真誠接受答案和指引，毋須執著重覆測算。
               </p>
             </div>
 

@@ -102,15 +102,11 @@ export default function LenormandPage() {
   return (
     <main className="relative min-h-screen text-white px-6 py-14 overflow-hidden">
 
-      {/* 背景 */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/backgrounds/lenormand-bg.png')",
-        }}
-      />
+      {/* 🌫️ 霧感背景（無圖片版） */}
+      <div className="absolute inset-0 bg-[#0f0f0f]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(184,170,140,0.06),transparent_55%)]" />
 
-      {/* 內容 */}
       <div className="relative z-10 mx-auto max-w-6xl">
 
         {/* HEADER */}
@@ -139,25 +135,12 @@ export default function LenormandPage() {
           />
         </div>
 
-        {/* DRAW BUTTON */}
+        {/* DRAW BUTTON（霧感化） */}
         <div className="flex justify-center mb-10">
           <button
             onClick={handleDraw}
             disabled={isDrawLocked}
-            className="
-              rounded-full
-              border border-white/10
-              bg-white/[0.03]
-              px-8 py-3
-
-              backdrop-blur-md
-
-              hover:bg-white/[0.05]
-              hover:border-white/20
-
-              disabled:opacity-40
-              transition
-            "
+            className="rounded-full border border-white/15 bg-white/[0.03] px-8 py-3 backdrop-blur-md hover:bg-white/[0.06] disabled:opacity-40 transition"
           >
             {loading ? "抽牌中..." : "開始占卜"}
           </button>
@@ -169,7 +152,7 @@ export default function LenormandPage() {
             {spread.map((item) => (
               <div
                 key={item.position}
-                className="rounded-3xl border border-white/10 bg-white/[0.03] p-5"
+                className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5"
               >
                 <Image
                   src={item.card.image}
@@ -199,39 +182,14 @@ export default function LenormandPage() {
             <button
               onClick={handleExplain}
               disabled={isExplainLocked}
-              className="
-                rounded-full
-                border border-white/10
-                bg-white/[0.03]
-                px-6 py-2
-
-                backdrop-blur-md
-
-                hover:bg-white/[0.05]
-                hover:border-white/20
-
-                disabled:opacity-40
-                transition
-              "
+              className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40 transition"
             >
               {explaining ? "解讀中..." : result ? "已解讀" : "詳細解說"}
             </button>
 
             <button
               onClick={copyPrompt}
-              className="
-                rounded-full
-                border border-white/10
-                bg-white/[0.03]
-                px-6 py-2
-
-                backdrop-blur-md
-
-                hover:bg-white/[0.05]
-                hover:border-white/20
-
-                transition
-              "
+              className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] transition"
             >
               複製指令貼至AI
             </button>
@@ -240,7 +198,7 @@ export default function LenormandPage() {
 
         {/* RESULT */}
         {result && (
-          <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+          <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6">
             <h3 className="mb-3 text-lg">神諭解讀</h3>
             <p className="whitespace-pre-line text-[#d6d0c6]">
               {result}
@@ -248,44 +206,19 @@ export default function LenormandPage() {
           </div>
         )}
 
-        {/* ACTIONS */}
+        {/* ACTIONS（霧感統一） */}
         <div className="flex flex-col md:flex-row gap-4 justify-center">
 
           <button
             onClick={reset}
-            className="
-              rounded-full
-              border border-white/10
-              bg-white/[0.03]
-              px-6 py-2
-
-              backdrop-blur-md
-
-              hover:bg-white/[0.05]
-              hover:border-white/20
-
-              transition
-            "
+            className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] transition"
           >
             重新開始
           </button>
 
           <Link
             href="/"
-            className="
-              rounded-full
-              border border-white/10
-              bg-white/[0.03]
-              px-6 py-2
-              text-center
-
-              backdrop-blur-md
-
-              hover:bg-white/[0.05]
-              hover:border-white/20
-
-              transition
-            "
+            className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 text-center hover:bg-white/[0.06] transition"
           >
             返回首頁
           </Link>

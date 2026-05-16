@@ -32,7 +32,8 @@ export async function POST(req: Request) {
     console.error("🔥 FULL ERROR:", error);
 
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, 
+        error: error instanceof Error ? error.message : String(error), },
       { status: 500 }
     );
   }

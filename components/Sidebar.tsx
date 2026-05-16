@@ -47,7 +47,7 @@ export default function Sidebar() {
             </Link>
 
             <Link href="/lenormand" className={linkClass("/lenormand")}>
-              雷諾曼（預留）
+              雷諾曼卡牌
             </Link>
           </div>
         </div>

@@ -104,7 +104,7 @@ export default function MobileSidebar() {
                 className={linkClass("/lenormand")}
                 onClick={() => setOpen(false)}
               >
-                雷諾曼（預留）
+                雷諾曼卡牌
               </Link>
             </div>
           </div>

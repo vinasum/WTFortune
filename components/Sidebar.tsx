@@ -18,6 +18,7 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#0f0f0f] border-r border-white/10">
+
       {/* Brand */}
       <div className="p-4 text-white font-semibold text-lg">
         What the Fortune

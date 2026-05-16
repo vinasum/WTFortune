@@ -148,7 +148,7 @@ export default function Home() {
             </h2>
 
             <p className="relative z-10 text-[#a8a091] text-center md:text-left">
-              直覺化希望圖卡 x 解析過去、現在與未來
+              直覺圖卡 | 解析過去、現在與未來
             </p>
 
             <Link

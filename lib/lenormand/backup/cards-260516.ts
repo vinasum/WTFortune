@@ -1,4 +1,4 @@
-import { LenormandCard } from "./types";
+import { LenormandCard } from "../types";
 
 export const LENORMAND_CARDS: LenormandCard[] = [
   {

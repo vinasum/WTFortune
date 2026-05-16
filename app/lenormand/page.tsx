@@ -19,10 +19,7 @@ export default function LenormandPage() {
   const [explaining, setExplaining] = useState(false);
   const [revealing, setRevealing] = useState(false);
 
-  // 🔒 防止重複抽牌
   const isDrawLocked = spread.length > 0 || loading;
-
-  // 🔒 防止重複解讀（避免 token 浪費）
   const isExplainLocked = !!result || explaining;
 
   const handleDraw = async () => {
@@ -103,8 +100,18 @@ export default function LenormandPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0f0f0f] text-white px-6 py-14">
-      <div className="mx-auto max-w-6xl">
+    <main className="relative min-h-screen text-white px-6 py-14 overflow-hidden">
+
+      {/* 背景 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/backgrounds/lenormand-bg.png')",
+        }}
+      />
+
+      {/* 內容 */}
+      <div className="relative z-10 mx-auto max-w-6xl">
 
         {/* HEADER */}
         <div className="text-center mb-6">
@@ -112,7 +119,7 @@ export default function LenormandPage() {
             雷諾曼占卜
           </h1>
 
-          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3] leading-relaxed">
+          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 text-sm text-[#b8b0a3] leading-relaxed">
             請讓心緒沉澱，呼吸放緩，專注於你的問題。
             抽牌後，能量會逐步展開。
           </div>
@@ -128,7 +135,7 @@ export default function LenormandPage() {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="輸入你的問題"
-            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm outline-none"
+            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm outline-none backdrop-blur-md"
           />
         </div>
 
@@ -137,7 +144,20 @@ export default function LenormandPage() {
           <button
             onClick={handleDraw}
             disabled={isDrawLocked}
-            className="rounded-full border border-white/20 px-8 py-3 hover:bg-white/10 disabled:opacity-40"
+            className="
+              rounded-full
+              border border-white/10
+              bg-white/[0.03]
+              px-8 py-3
+
+              backdrop-blur-md
+
+              hover:bg-white/[0.05]
+              hover:border-white/20
+
+              disabled:opacity-40
+              transition
+            "
           >
             {loading ? "抽牌中..." : "開始占卜"}
           </button>
@@ -179,14 +199,39 @@ export default function LenormandPage() {
             <button
               onClick={handleExplain}
               disabled={isExplainLocked}
-              className="rounded-full border border-white/20 px-6 py-2 hover:bg-white/10 disabled:opacity-40"
+              className="
+                rounded-full
+                border border-white/10
+                bg-white/[0.03]
+                px-6 py-2
+
+                backdrop-blur-md
+
+                hover:bg-white/[0.05]
+                hover:border-white/20
+
+                disabled:opacity-40
+                transition
+              "
             >
               {explaining ? "解讀中..." : result ? "已解讀" : "詳細解說"}
             </button>
 
             <button
               onClick={copyPrompt}
-              className="rounded-full border border-white/20 px-6 py-2 hover:bg-white/10"
+              className="
+                rounded-full
+                border border-white/10
+                bg-white/[0.03]
+                px-6 py-2
+
+                backdrop-blur-md
+
+                hover:bg-white/[0.05]
+                hover:border-white/20
+
+                transition
+              "
             >
               複製指令貼至AI
             </button>
@@ -208,14 +253,39 @@ export default function LenormandPage() {
 
           <button
             onClick={reset}
-            className="rounded-full border border-white/20 px-6 py-2 hover:bg-white/10"
+            className="
+              rounded-full
+              border border-white/10
+              bg-white/[0.03]
+              px-6 py-2
+
+              backdrop-blur-md
+
+              hover:bg-white/[0.05]
+              hover:border-white/20
+
+              transition
+            "
           >
             重新開始
           </button>
 
           <Link
             href="/"
-            className="rounded-full border border-white/20 px-6 py-2 text-center hover:bg-white/10"
+            className="
+              rounded-full
+              border border-white/10
+              bg-white/[0.03]
+              px-6 py-2
+              text-center
+
+              backdrop-blur-md
+
+              hover:bg-white/[0.05]
+              hover:border-white/20
+
+              transition
+            "
           >
             返回首頁
           </Link>

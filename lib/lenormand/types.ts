@@ -24,7 +24,7 @@ export type LenormandCard = {
   image: string;
 };
 
-export type SpreadRole = "problem" | "state" | "future";
+export type SpreadRole = "問題與過去" | "現在的狀態" | "未來和結果";
 
 export type SpreadCard = {
   position: number;

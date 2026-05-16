@@ -27,16 +27,16 @@ export async function POST(req: Request) {
       success: true,
       result: text,
     });
-
-catch (error) {
-  return NextResponse.json(
-    {
-      success: false,
-      error: error instanceof Error
-        ? error.message
-        : "Unknown error",
-    },
-    { status: 500 }
-  );
-}
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Unknown error",
+      },
+      { status: 500 }
+    );
+  }
 }

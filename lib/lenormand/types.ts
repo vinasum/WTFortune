@@ -3,7 +3,7 @@ export type CardAspect = "dark" | "light";
 export type LenormandCard = {
   id: string;
 
-  // 同 archetype 用來做 connection
+  // 用於 archetype 關聯（跨牌連結）
   archetype: string;
 
   aspect: CardAspect;
@@ -11,22 +11,20 @@ export type LenormandCard = {
   name: string;
   title: string;
 
-  // 基本牌義（簡短）
+  // 基本牌義（簡短描述）
   basic: string;
 
-  // AI 用的關鍵詞
+  // AI 推理用關鍵字
   tags: string[];
 
-  // 提醒 AI 重點觀察面向
+  // AI 判斷重點觀察方向
   aiFocus: string[];
 
+  // 圖片路徑
   image: string;
 };
 
-export type SpreadRole =
-  | "problem"
-  | "state"
-  | "future";
+export type SpreadRole = "problem" | "state" | "future";
 
 export type SpreadCard = {
   position: number;
@@ -37,6 +35,7 @@ export type SpreadCard = {
 export type CardConnection = {
   type: "evolution" | "conflict" | "amplify";
 
+  // 用於牌之間的關聯識別
   archetype: string;
 
   positions: number[];

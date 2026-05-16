@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
 export default function Home() {
   const handleShare = async () => {
     try {
@@ -38,12 +37,10 @@ export default function Home() {
         </button>
       </div>
 
-      {/* ================= HERO ================= */}
+      {/* HERO */}
       <section className="relative z-10 flex flex-col items-center px-6 pt-10 md:pt-12">
 
-        {/* HERO block */}
         <div className="flex flex-col items-center pt-6">
-
           <Image
             src="/logo.png"
             alt="What the Fortune"
@@ -55,10 +52,8 @@ export default function Home() {
           />
         </div>
 
-        {/* ✔ MIDDLE SPACER（關鍵：改成呼吸段） */}
         <div className="h-10 md:h-14" />
 
-        {/* headline */}
         <div className="max-w-2xl text-center mt-0">
           <h1 className="text-4xl font-light md:text-6xl">
             聽聽未來怎麼說？
@@ -69,15 +64,13 @@ export default function Home() {
           </p>
         </div>
 
-        {/* spacer（卡片距離） */}
         <div className="h-6 md:h-10" />
 
-        {/* ================= CARDS ================= */}
-        <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 opacity-90">
+        {/* CARDS */}
+        <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 opacity-90">
 
           {/* card 1 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
-
             <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
             <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
@@ -86,9 +79,6 @@ export default function Home() {
                 alt="小六壬"
                 width={150}
                 height={150}
-                loading="eager"
-                decoding="async"
-                fetchPriority="low"
                 className="w-24 h-24"
               />
             </div>
@@ -111,7 +101,6 @@ export default function Home() {
 
           {/* card 2 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
-
             <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
             <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
@@ -120,8 +109,6 @@ export default function Home() {
                 alt="易數流卦"
                 width={150}
                 height={150}
-                loading="eager"
-                fetchPriority="low"
                 className="w-24 h-24"
               />
             </div>
@@ -141,9 +128,39 @@ export default function Home() {
               開始起卦
             </Link>
           </div>
+
+          {/* card 3 - 新增 */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
+              <Image
+                src="/icons/divination/lenormand.png"
+                alt="雷諾曼卡牌"
+                width={150}
+                height={150}
+                className="w-24 h-24"
+              />
+            </div>
+
+            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
+              雷諾曼卡牌占卜
+            </h2>
+
+            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+              直覺化希望圖卡 x 解析過去、現在與未來
+            </p>
+
+            <Link
+              href="/lenormand"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
+            >
+              開始占卜
+            </Link>
+          </div>
         </section>
 
-        {/* ================= COMING SOON ================= */}
+        {/* COMING SOON */}
         <div className="mt-32 w-full max-w-5xl">
           <p className="mb-10 text-center text-sm tracking-[0.35em] text-[#7d7668]">
             COMING SOON

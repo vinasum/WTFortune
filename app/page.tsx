@@ -24,10 +24,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#111111] text-[#f5f1ea]">
 
-      {/* background */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
 
-      {/* share */}
       <div className="absolute right-5 top-5 z-30">
         <button
           onClick={handleShare}
@@ -37,7 +35,6 @@ export default function Home() {
         </button>
       </div>
 
-      {/* HERO */}
       <section className="relative z-10 flex flex-col items-center px-6 pt-10 md:pt-12">
 
         <div className="flex flex-col items-center pt-6">
@@ -80,6 +77,7 @@ export default function Home() {
                 width={150}
                 height={150}
                 className="w-24 h-24"
+                priority
               />
             </div>
 
@@ -110,6 +108,7 @@ export default function Home() {
                 width={150}
                 height={150}
                 className="w-24 h-24"
+                priority
               />
             </div>
 
@@ -129,7 +128,7 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* card 3 - 新增 */}
+          {/* card 3 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
             <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
@@ -140,6 +139,7 @@ export default function Home() {
                 width={150}
                 height={150}
                 className="w-24 h-24"
+                priority
               />
             </div>
 
@@ -158,6 +158,7 @@ export default function Home() {
               開始占卜
             </Link>
           </div>
+
         </section>
 
         {/* COMING SOON */}

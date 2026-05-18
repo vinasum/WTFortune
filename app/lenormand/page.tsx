@@ -131,7 +131,7 @@ export default function LenormandPage() {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="輸入你的問題"
-            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm outline-none backdrop-blur-md"
+            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-base outline-none backdrop-blur-md"
           />
         </div>
 

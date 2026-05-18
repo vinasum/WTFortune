@@ -45,9 +45,9 @@ export default function LiurenPage() {
 
       {/* 背景圖（已處理過，不再加任何效果） */}
       <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/backgrounds/liuren-bg.png')",
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/backgrounds/liuren-bg.png')",
         }}
       />
 
@@ -109,7 +109,9 @@ export default function LiurenPage() {
                 description={description}
                 mode={mode}
                 setMode={setMode}
-                onCopy={() => navigator.clipboard.writeText(prompt)}
+
+                // 已隱藏「複製你的AI神諭貼到ChatGPT」
+                onCopy={() => {}}
               />
             </div>
           )}

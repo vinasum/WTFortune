@@ -81,11 +81,11 @@ export default function Home() {
               />
             </div>
 
-            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
               小六壬占卜
             </h2>
 
-            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+            <p className="relative z-10 text-[#a8a091] text-center">
               感情 / 工作 / 人際快速觀測
             </p>
 
@@ -112,11 +112,11 @@ export default function Home() {
               />
             </div>
 
-            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
               易數流卦
             </h2>
 
-            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+            <p className="relative z-10 text-[#a8a091] text-center">
               數字起卦 × 複雜狀態卦象解讀
             </p>
 
@@ -143,11 +143,11 @@ export default function Home() {
               />
             </div>
 
-            <h2 className="relative z-10 mb-3 text-2xl text-center md:text-left">
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
               雷諾曼卡牌占卜
             </h2>
 
-            <p className="relative z-10 text-[#a8a091] text-center md:text-left">
+            <p className="relative z-10 text-[#a8a091] text-center">
               直覺圖卡 | 解析過去、現在與未來
             </p>
 

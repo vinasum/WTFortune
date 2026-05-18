@@ -7,14 +7,14 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const linkClass = (path: string) =>
-    `px-3 py-2 rounded-md text-sm transition ${
+    `px-3 py-2 rounded-md text-base transition ${
       pathname === path
         ? "bg-white/10 text-white"
         : "text-white/70 hover:text-white hover:bg-white/5"
     }`;
 
   const sectionTitle =
-    "px-3 py-2 text-[11px] tracking-[0.2em] text-white/30";
+    "px-3 py-2 text-[14px] tracking-[0.2em] text-white/30";
 
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#0f0f0f] border-r border-white/10">
@@ -25,7 +25,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-col p-4 text-sm">
+      <nav className="flex flex-col p-4 text-base">
 
         {/* 首頁 */}
         <div className="mb-6">
@@ -57,7 +57,7 @@ export default function Sidebar() {
         <div className="mb-6">
           <div className={sectionTitle}>命理</div>
 
-          <div className="px-3 py-2 text-white/40 text-sm">
+          <div className="px-3 py-2 text-white/40 text-base">
             COMING SOON
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function Sidebar() {
         <div>
           <div className={sectionTitle}>關於我</div>
 
-          <div className="px-3 py-2 text-white/40 text-sm leading-relaxed">
+          <div className="px-3 py-2 text-white/40 text-base leading-relaxed">
             之後將放置論命預約連結<br />
             以及 YT / IG / Threads
           </div>

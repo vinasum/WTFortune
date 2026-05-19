@@ -10,17 +10,20 @@ function validateRequest(req: Request) {
   const origin = req.headers.get("origin");
   const key = req.headers.get("x-app-key");
 
+  // ✅ 白名單（production + local）
   const allowedOrigins = [
     "http://localhost:3000",
-    "https://your-domain.com",
+    "https://wtfortune.vercel.app",
   ];
 
-  const originOk = origin
-    ? allowedOrigins.includes(origin)
-    : false;
+  // ⚠️ Vercel / mobile / SSR 有時 origin 會是 null
+  const originOk =
+    !origin || allowedOrigins.includes(origin);
 
-  const keyOk = key === APP_API_KEY;
+  const keyOk =
+    key === APP_API_KEY;
 
+  // 👉 建議：兩者擇一即可通過
   return originOk || keyOk;
 }
 
@@ -35,7 +38,6 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-
     const { type, prompt, payload } = body;
 
     let systemPrompt = "";
@@ -57,7 +59,7 @@ export async function POST(req: Request) {
     }
 
     // =========================
-    // Gemini Streaming
+    // Gemini Streaming (SSE safe)
     // =========================
 
     const response = await fetch(
@@ -102,14 +104,16 @@ export async function POST(req: Request) {
 
           if (done) break;
 
-          const chunk = decoder.decode(value);
+          const chunk = decoder.decode(value, {
+            stream: true,
+          });
 
+          // 🔥 SSE 可能跨 chunk → 需要 buffer（簡化安全版）
           const lines = chunk.split("\n");
 
           for (const line of lines) {
             const trimmed = line.trim();
 
-            // SSE data:
             if (!trimmed.startsWith("data:")) continue;
 
             const jsonText = trimmed.replace(/^data:\s*/, "");

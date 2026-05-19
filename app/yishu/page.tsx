@@ -16,7 +16,13 @@ export default function YishuPage() {
   const [question, setQuestion] = useState("");
 
   const [result, setResult] = useState<any>(null);
+
+  // AI state
+  const [prompt, setPrompt] = useState<string | null>(null);
+  const [aiResult, setAiResult] = useState<string | null>(null);
+
   const [loading, setLoading] = useState(false);
+  const [explaining, setExplaining] = useState(false);
 
   async function handleDivination() {
     setLoading(true);
@@ -45,22 +51,12 @@ export default function YishuPage() {
     const data = await res.json();
 
     setResult(data);
-    setLoading(false);
-  }
 
-  function resetAll() {
-    setN1("");
-    setN2("");
-    setQuestion("");
-    setResult(null);
-  }
-
-  // ✅ AI Prompt
-  const aiPrompt = result
-    ? `請根據以下卦象與使用者問題進行整體解讀與創作：
+    // 👉 保留 prompt（之後送 AI API 用）
+    const aiPrompt = `
+請根據以下卦象與使用者問題進行整體解讀與創作：
 
 【解讀任務】
-
 請以「高我 / 守護靈 / 守護神」三位一體的視角進行敘述。
 
 語氣需：
@@ -69,9 +65,6 @@ export default function YishuPage() {
 - 有引導性與洞察感
 - 帶有命運觀察者的氣息
 - 療癒但克制，不雞湯化
-
-根據卦象與使用者問題進行整體詮釋；
-若無使用者問題，則改為分析使用者當前整體能量、運勢與生命狀態。
 
 請完成以下內容：
 
@@ -84,27 +77,81 @@ export default function YishuPage() {
 
 【卦象資訊】
 
-- 卦名：${result.meta?.name}
-- 上卦：${result.gua?.upper}
-- 下卦：${result.gua?.lower}
-- 動爻：第 ${result.gua?.movingLine} 爻
-- 卦意：${result.meta?.meaning}
+- 卦名：${data.meta?.name}
+- 上卦：${data.gua?.upper}
+- 下卦：${data.gua?.lower}
+- 動爻：第 ${data.gua?.movingLine} 爻
+- 卦意：${data.meta?.meaning}
 
 ---
 
 【使用者問題】
 
 ${question || "無"}
+`;
 
----
+    setPrompt(aiPrompt);
 
-【輸出格式】
+    setLoading(false);
+  }
 
-1. 圖像生成 Prompt
-2. 標語
-3. 解說內容
-`
-    : "";
+  // ✅ 單一 AI API（已統一架構）
+  const handleExplain = async () => {
+    if (!prompt || explaining || aiResult) return;
+
+    setExplaining(true);
+
+    try {
+      const res = await fetch("/api/divination/explain", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "yishu",
+          prompt,
+          payload: {
+            name: result?.meta?.name,
+            upper: result?.gua?.upper,
+            lower: result?.gua?.lower,
+            movingLine: result?.gua?.movingLine,
+            meaning: result?.meta?.meaning,
+          },
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data?.success) {
+        setAiResult(data.result);
+      } else {
+        alert("目前 AI 服務無法使用，請改用複製指令");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("目前 AI 服務無法使用，請改用複製指令");
+    } finally {
+      setExplaining(false);
+    }
+  };
+
+  // copy prompt
+  const copyPrompt = async () => {
+    if (!prompt) return;
+    await navigator.clipboard.writeText(prompt);
+    alert("已複製指令");
+  };
+
+  function resetAll() {
+    setN1("");
+    setN2("");
+    setQuestion("");
+    setResult(null);
+    setPrompt(null);
+    setAiResult(null);
+    setLoading(false);
+    setExplaining(false);
+  }
 
   return (
     <main className="relative min-h-screen overflow-hidden text-[#f5f1ea]">
@@ -117,7 +164,6 @@ ${question || "無"}
         }}
       />
 
-      {/* 內容 */}
       <div className="relative z-10 py-20 px-6">
         <div className="max-w-2xl mx-auto">
 
@@ -126,7 +172,7 @@ ${question || "無"}
 
             <button
               onClick={() => router.push("/")}
-              className="inline-flex items-center gap-2 text-sm tracking-[0.2em] text-[#b8aa8c] hover:text-[#f5f1ea] transition"
+              className="text-sm tracking-[0.2em] text-[#b8aa8c] hover:text-[#f5f1ea]"
             >
               ← 返回首頁
             </button>
@@ -134,7 +180,7 @@ ${question || "無"}
             {result && (
               <button
                 onClick={resetAll}
-                className="text-sm tracking-[0.15em] text-[#7d7668] hover:text-[#f5f1ea] transition"
+                className="text-sm text-[#7d7668] hover:text-[#f5f1ea]"
               >
                 ↻ 重新開始
               </button>
@@ -149,11 +195,9 @@ ${question || "無"}
               易數流卦
             </h1>
 
-            {/* 提示文字 */}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm px-5 py-4 text-left">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left">
               <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
-                卦象並非預言，而是當下心念與天地流轉的映照。<br />
-                請真誠接受答案和指引，毋須執著重覆測算。
+                卦象並非預言，而是當下心念與天地流轉的映照。
               </p>
             </div>
 
@@ -175,11 +219,38 @@ ${question || "無"}
 
           {/* Result */}
           {result && (
-            <div className="mt-6">
-              <YishuResult
-                result={result}
-                aiPrompt={aiPrompt}
-              />
+            <YishuResult result={result} />
+          )}
+
+          {/* AI ACTIONS */}
+          {prompt && (
+            <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
+
+              <button
+                onClick={handleExplain}
+                disabled={explaining || !!aiResult}
+                className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40"
+              >
+                {explaining ? "解讀中..." : aiResult ? "已解讀" : "詳細解說"}
+              </button>
+
+              <button
+                onClick={copyPrompt}
+                className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06]"
+              >
+                複製指令貼至AI
+              </button>
+
+            </div>
+          )}
+
+          {/* AI RESULT */}
+          {aiResult && (
+            <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+              <h3 className="mb-3">神諭解讀</h3>
+              <p className="whitespace-pre-line text-[#d6d0c6]">
+                {aiResult}
+              </p>
             </div>
           )}
 

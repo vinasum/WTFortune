@@ -1,11 +1,9 @@
 type Props = {
   result: any;
-  aiPrompt: string;
 };
 
 export default function YishuResult({
   result,
-  aiPrompt,
 }: Props) {
   return (
     <div
@@ -64,17 +62,8 @@ export default function YishuResult({
         動爻：第 {result.gua?.movingLine} 爻
       </div>
 
-      <div className="text-sm mb-4 text-[#bfb7a8]">
+      <div className="text-sm text-[#bfb7a8]">
         {result.meta?.meaning}
-      </div>
-
-      <div className="pt-4 border-t border-white/10">
-
-        <div className="text-sm mb-3">
-          取得卦象
-        </div>
-
-
       </div>
 
     </div>

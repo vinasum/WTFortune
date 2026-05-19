@@ -13,17 +13,19 @@ export default function LenormandPage() {
   const [spread, setSpread] = useState<SpreadCard[]>([]);
 
   const [prompt, setPrompt] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [explaining, setExplaining] = useState(false);
   const [revealing, setRevealing] = useState(false);
 
   const isDrawLocked = spread.length > 0 || loading;
+
+  // 🔒 一次解讀完成就鎖定
   const isExplainLocked = !!result || explaining;
 
   // =========================
-  // 抽牌 + 生成 prompt
+  // 抽牌 + prompt
   // =========================
   const handleDraw = async () => {
     if (isDrawLocked) return;
@@ -38,8 +40,8 @@ export default function LenormandPage() {
 
     await new Promise((r) => setTimeout(r, 2500));
 
-    setRevealing(false);
     setLoading(false);
+    setRevealing(false);
 
     const aiPrompt = `
 你是一位專業雷諾曼占卜師。
@@ -68,19 +70,19 @@ ${question || "無"}
   };
 
   // =========================
-  // AI 解讀（統一 API）
+  // STREAMING AI
   // =========================
   const handleExplain = async () => {
     if (!prompt || isExplainLocked) return;
 
     setExplaining(true);
+    setResult("");
 
     try {
       const res = await fetch("/api/divination/explain", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-
         },
         body: JSON.stringify({
           type: "lenormand",
@@ -92,12 +94,26 @@ ${question || "無"}
         }),
       });
 
-      const data = await res.json();
+      if (!res.ok || !res.body) {
+        throw new Error("stream failed");
+      }
 
-      if (data?.success) {
-        setResult(data.result);
-      } else {
-        alert("目前 AI 無法使用，請改用複製指令");
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+
+        const chunk = decoder.decode(value || new Uint8Array(), {
+          stream: true,
+        });
+
+        if (chunk) {
+          setResult((prev) => (prev || "") + chunk);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -108,7 +124,7 @@ ${question || "無"}
   };
 
   // =========================
-  // 複製 prompt
+  // copy prompt
   // =========================
   const copyPrompt = async () => {
     if (!prompt) return;
@@ -122,7 +138,7 @@ ${question || "無"}
   const reset = () => {
     setSpread([]);
     setPrompt(null);
-    setResult(null);
+    setResult("");
     setQuestion("");
     setLoading(false);
     setExplaining(false);
@@ -139,20 +155,45 @@ ${question || "無"}
 
       <div className="relative z-10 mx-auto max-w-6xl">
 
-{/* HEADER */}
-<div className="text-center mb-6">
-  <h1 className="text-4xl font-light tracking-wide">
-    雷諾曼占卜
-  </h1>
+        {/* TOP NAV */}
+        <div className="flex items-center justify-between mb-6">
 
-  <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3]">
-    請讓心緒沉澱，專注於你的問題。
-  </div>
+          <Link
+            href="/"
+            className="text-sm tracking-[0.2em] text-[#b8aa8c] hover:text-[#f5f1ea]"
+          >
+            ← 返回首頁
+          </Link>
 
-  <p className="mt-4 text-[#a8a091]">
-    三張牌：過去 · 現在 · 未來
-  </p>
-</div>
+          {(spread.length > 0 || prompt || result) ? (
+            <button
+              onClick={reset}
+              className="text-sm text-[#7d7668] hover:text-[#f5f1ea]"
+            >
+              ↻ 重新開始
+            </button>
+          ) : (
+            <div className="w-[90px]" />
+          )}
+
+        </div>
+
+        {/* HEADER */}
+        <div className="text-center mb-6">
+
+          <h1 className="text-4xl font-light tracking-wide">
+            雷諾曼占卜
+          </h1>
+
+          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3]">
+            請讓心緒沉澱，專注於你的問題。
+          </div>
+
+          <p className="mt-4 text-[#a8a091]">
+            三張牌：過去 · 現在 · 未來
+          </p>
+
+        </div>
 
         {/* INPUT */}
         <div className="flex justify-center mb-6">
@@ -214,7 +255,11 @@ ${question || "無"}
               disabled={isExplainLocked}
               className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40"
             >
-              {explaining ? "解讀中..." : result ? "已解讀" : "詳細解說"}
+              {explaining
+                ? "解讀中..."
+                : result
+                ? "已解讀"
+                : "詳細解說"}
             </button>
 
             <button
@@ -230,15 +275,19 @@ ${question || "無"}
         {/* RESULT */}
         {result && (
           <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="mb-3 text-lg">神諭解讀</h3>
-            <p className="whitespace-pre-line text-[#d6d0c6]">
+            <h3 className="mb-3 text-lg">
+              神諭解讀
+            </h3>
+
+            <p className="whitespace-pre-line text-[#d6d0c6] leading-8">
               {result}
             </p>
           </div>
         )}
 
-        {/* RESET */}
+        {/* BOTTOM ACTIONS */}
         <div className="flex justify-center gap-4">
+
           <button
             onClick={reset}
             className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2"
@@ -252,6 +301,7 @@ ${question || "無"}
           >
             返回首頁
           </Link>
+
         </div>
 
       </div>

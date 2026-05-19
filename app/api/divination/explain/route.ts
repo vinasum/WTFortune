@@ -6,30 +6,24 @@ export const runtime = "edge";
 
 const APP_API_KEY = process.env.APP_API_KEY;
 
+// =========================
+// Request validation（穩定版）
+// =========================
 function validateRequest(req: Request) {
-  const origin = req.headers.get("origin");
   const key = req.headers.get("x-app-key");
 
-  // ✅ 白名單（production + local）
-  const allowedOrigins = [
-    "http://localhost:3000",
-    "https://wtfortune.vercel.app",
-  ];
+  // 🔥 開發環境直接放行（避免 localhost 被卡）
+  if (process.env.NODE_ENV === "development") {
+    return true;
+  }
 
-  // ⚠️ Vercel / mobile / SSR 有時 origin 會是 null
-  const originOk =
-    !origin || allowedOrigins.includes(origin);
-
-  const keyOk =
-    key === APP_API_KEY;
-
-  // 👉 建議：兩者擇一即可通過
-  return originOk || keyOk;
+  // 🔥 production 只驗 API key（穩定、不依賴 origin）
+  return key === APP_API_KEY;
 }
 
 export async function POST(req: Request) {
   try {
-    // 🔒 API 防護
+    // 🔒 安全檢查
     if (!validateRequest(req)) {
       return NextResponse.json(
         { error: "Unauthorized" },
@@ -59,11 +53,10 @@ export async function POST(req: Request) {
     }
 
     // =========================
-    // Gemini Streaming (SSE safe)
+    // NON-STREAMING Gemini
     // =========================
-
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=" +
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
         process.env.GEMINI_API_KEY,
       {
         method: "POST",
@@ -85,69 +78,29 @@ export async function POST(req: Request) {
       }
     );
 
-    if (!response.body) {
+    if (!response.ok) {
+      const errText = await response.text();
+
+      console.error("Gemini API error:", errText);
+
       return NextResponse.json(
-        { error: "No response body" },
+        {
+          error: "Gemini API failed",
+          detail: errText,
+        },
         { status: 500 }
       );
     }
 
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
+    const data = await response.json();
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        const reader = response.body!.getReader();
+    const result =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-        while (true) {
-          const { done, value } = await reader.read();
-
-          if (done) break;
-
-          const chunk = decoder.decode(value, {
-            stream: true,
-          });
-
-          // 🔥 SSE 可能跨 chunk → 需要 buffer（簡化安全版）
-          const lines = chunk.split("\n");
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-
-            if (!trimmed.startsWith("data:")) continue;
-
-            const jsonText = trimmed.replace(/^data:\s*/, "");
-
-            if (jsonText === "[DONE]") continue;
-
-            try {
-              const json = JSON.parse(jsonText);
-
-              const text =
-                json?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-              if (text) {
-                controller.enqueue(
-                  encoder.encode(text)
-                );
-              }
-            } catch {
-              // ignore malformed chunks
-            }
-          }
-        }
-
-        controller.close();
-      },
+    return NextResponse.json({
+      success: true,
+      result,
     });
-
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache",
-      },
-    });
-
   } catch (err) {
     console.error(err);
 

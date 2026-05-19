@@ -80,6 +80,7 @@ ${question || "無"}
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+
         },
         body: JSON.stringify({
           type: "lenormand",
@@ -138,20 +139,20 @@ ${question || "無"}
 
       <div className="relative z-10 mx-auto max-w-6xl">
 
-        {/* HEADER */}
-        <div className="text-center mb-6">
-          <h1 className="text-4xl font-light tracking-wide">
-            雷諾曼占卜
-          </h1>
+{/* HEADER */}
+<div className="text-center mb-6">
+  <h1 className="text-4xl font-light tracking-wide">
+    雷諾曼占卜
+  </h1>
 
-          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3]">
-            請讓心緒沉澱，專注於你的問題。
-          </div>
+  <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3]">
+    請讓心緒沉澱，專注於你的問題。
+  </div>
 
-          <p className="mt-4 text-[#a8a091]">
-            三張牌：過去 · 現在 · 未來
-          </p>
-        </div>
+  <p className="mt-4 text-[#a8a091]">
+    三張牌：過去 · 現在 · 未來
+  </p>
+</div>
 
         {/* INPUT */}
         <div className="flex justify-center mb-6">

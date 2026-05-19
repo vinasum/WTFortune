@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import YishuForm from "./components/YishuForm";
 import YishuResult from "./components/YishuResult";
@@ -17,12 +18,13 @@ export default function YishuPage() {
 
   const [result, setResult] = useState<any>(null);
 
-  // AI state
   const [prompt, setPrompt] = useState<string | null>(null);
-  const [aiResult, setAiResult] = useState<string | null>(null);
+  const [aiResult, setAiResult] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [explaining, setExplaining] = useState(false);
+
+  const isExplainLocked = explaining || aiResult.length > 0;
 
   async function handleDivination() {
     setLoading(true);
@@ -49,10 +51,8 @@ export default function YishuPage() {
     });
 
     const data = await res.json();
-
     setResult(data);
 
-    // 👉 保留 prompt（之後送 AI API 用）
     const aiPrompt = `
 請根據以下卦象與使用者問題進行整體解讀與創作：
 
@@ -91,15 +91,15 @@ ${question || "無"}
 `;
 
     setPrompt(aiPrompt);
-
     setLoading(false);
   }
 
-  // ✅ 單一 AI API（已統一架構）
+  // STREAMING AI
   const handleExplain = async () => {
-    if (!prompt || explaining || aiResult) return;
+    if (!prompt || isExplainLocked) return;
 
     setExplaining(true);
+    setAiResult("");
 
     try {
       const res = await fetch("/api/divination/explain", {
@@ -120,12 +120,26 @@ ${question || "無"}
         }),
       });
 
-      const data = await res.json();
+      if (!res.ok || !res.body) {
+        throw new Error("stream failed");
+      }
 
-      if (data?.success) {
-        setAiResult(data.result);
-      } else {
-        alert("目前 AI 服務無法使用，請改用複製指令");
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+
+        const chunk = decoder.decode(value || new Uint8Array(), {
+          stream: true,
+        });
+
+        if (chunk) {
+          setAiResult((prev) => prev + chunk);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -135,7 +149,6 @@ ${question || "無"}
     }
   };
 
-  // copy prompt
   const copyPrompt = async () => {
     if (!prompt) return;
     await navigator.clipboard.writeText(prompt);
@@ -148,7 +161,7 @@ ${question || "無"}
     setQuestion("");
     setResult(null);
     setPrompt(null);
-    setAiResult(null);
+    setAiResult("");
     setLoading(false);
     setExplaining(false);
   }
@@ -156,12 +169,9 @@ ${question || "無"}
   return (
     <main className="relative min-h-screen overflow-hidden text-[#f5f1ea]">
 
-      {/* 背景圖 */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/backgrounds/yishu-bg.png')",
-        }}
+        style={{ backgroundImage: "url('/backgrounds/yishu-bg.png')" }}
       />
 
       <div className="relative z-10 py-20 px-6">
@@ -177,7 +187,7 @@ ${question || "無"}
               ← 返回首頁
             </button>
 
-            {result && (
+            {(result || prompt) && (
               <button
                 onClick={resetAll}
                 className="text-sm text-[#7d7668] hover:text-[#f5f1ea]"
@@ -188,22 +198,16 @@ ${question || "無"}
 
           </div>
 
-          {/* 標題 */}
           <div className="text-center mb-12">
-
-            <h1 className="text-4xl font-light mb-6">
-              易數流卦
-            </h1>
+            <h1 className="text-4xl font-light mb-6">易數流卦</h1>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left">
               <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
                 卦象並非預言，而是當下心念與天地流轉的映照。
               </p>
             </div>
-
           </div>
 
-          {/* Form */}
           <div className="mb-10">
             <YishuForm
               n1={n1}
@@ -217,21 +221,21 @@ ${question || "無"}
             />
           </div>
 
-          {/* Result */}
-          {result && (
-            <YishuResult result={result} />
-          )}
+          {result && <YishuResult result={result} />}
 
-          {/* AI ACTIONS */}
           {prompt && (
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
 
               <button
                 onClick={handleExplain}
-                disabled={explaining || !!aiResult}
+                disabled={isExplainLocked}
                 className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40"
               >
-                {explaining ? "解讀中..." : aiResult ? "已解讀" : "詳細解說"}
+                {explaining
+                  ? "解讀中..."
+                  : aiResult
+                  ? "已解讀"
+                  : "詳細解說"}
               </button>
 
               <button
@@ -244,7 +248,6 @@ ${question || "無"}
             </div>
           )}
 
-          {/* AI RESULT */}
           {aiResult && (
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
               <h3 className="mb-3">神諭解讀</h3>
@@ -253,6 +256,24 @@ ${question || "無"}
               </p>
             </div>
           )}
+
+          <div className="flex justify-center gap-4 mt-10">
+
+            <button
+              onClick={resetAll}
+              className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2"
+            >
+              重新開始
+            </button>
+
+            <Link
+              href="/"
+              className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2"
+            >
+              返回首頁
+            </Link>
+
+          </div>
 
         </div>
       </div>

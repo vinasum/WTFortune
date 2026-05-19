@@ -22,6 +22,9 @@ export default function LenormandPage() {
   const isDrawLocked = spread.length > 0 || loading;
   const isExplainLocked = !!result || explaining;
 
+  // =========================
+  // 抽牌 + 生成 prompt
+  // =========================
   const handleDraw = async () => {
     if (isDrawLocked) return;
 
@@ -38,34 +41,54 @@ export default function LenormandPage() {
     setRevealing(false);
     setLoading(false);
 
-    try {
-      const res = await fetch("/api/lenormand", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: question || "",
-          spread: cards,
-        }),
-      });
+    const aiPrompt = `
+你是一位專業雷諾曼占卜師。
 
-      const data = await res.json();
-      setPrompt(data?.prompt ?? null);
-    } catch (err) {
-      console.error(err);
-      setPrompt(null);
-    }
+請解讀三張牌的敘事與能量流動。
+
+【牌陣】
+1（過去/問題）：${cards[0]?.card?.title}
+2（現在）：${cards[1]?.card?.title}
+3（未來）：${cards[2]?.card?.title}
+
+【使用者問題】
+${question || "無"}
+
+【解讀要求】
+請包含：
+1. 三牌故事線（敘事式解讀）
+2. 能量轉折點
+3. 情感 / 事件關係
+4. 最終趨勢與建議
+
+語氣需直覺性、象徵性、帶命運流動感。
+`;
+
+    setPrompt(aiPrompt);
   };
 
+  // =========================
+  // AI 解讀（統一 API）
+  // =========================
   const handleExplain = async () => {
     if (!prompt || isExplainLocked) return;
 
     setExplaining(true);
 
     try {
-      const res = await fetch("/api/lenormand/explain", {
+      const res = await fetch("/api/divination/explain", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "lenormand",
+          prompt,
+          payload: {
+            spread,
+            question,
+          },
+        }),
       });
 
       const data = await res.json();
@@ -73,22 +96,28 @@ export default function LenormandPage() {
       if (data?.success) {
         setResult(data.result);
       } else {
-        alert("目前無 token 或 API 無法使用，請複製 AI 神諭手動解讀");
+        alert("目前 AI 無法使用，請改用複製指令");
       }
     } catch (err) {
       console.error(err);
-      alert("目前無 token 或 API 無法使用，請複製 AI 神諭手動解讀");
+      alert("目前 AI 無法使用，請改用複製指令");
     } finally {
       setExplaining(false);
     }
   };
 
+  // =========================
+  // 複製 prompt
+  // =========================
   const copyPrompt = async () => {
     if (!prompt) return;
     await navigator.clipboard.writeText(prompt);
     alert("已複製指令");
   };
 
+  // =========================
+  // reset
+  // =========================
   const reset = () => {
     setSpread([]);
     setPrompt(null);
@@ -102,7 +131,7 @@ export default function LenormandPage() {
   return (
     <main className="relative min-h-screen text-white px-6 py-14 overflow-hidden">
 
-      {/* 🌫️ 霧感背景（無圖片版） */}
+      {/* 背景 */}
       <div className="absolute inset-0 bg-[#0f0f0f]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_60%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(184,170,140,0.06),transparent_55%)]" />
@@ -115,13 +144,12 @@ export default function LenormandPage() {
             雷諾曼占卜
           </h1>
 
-          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 text-sm text-[#b8b0a3] leading-relaxed">
-            請讓心緒沉澱，呼吸放緩，專注於你的問題。
-            抽牌後，能量會逐步展開。
+          <div className="mt-4 mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[#b8b0a3]">
+            請讓心緒沉澱，專注於你的問題。
           </div>
 
           <p className="mt-4 text-[#a8a091]">
-            三張牌：問題 · 現況 · 未來
+            三張牌：過去 · 現在 · 未來
           </p>
         </div>
 
@@ -131,16 +159,16 @@ export default function LenormandPage() {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="輸入你的問題"
-            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-base outline-none backdrop-blur-md"
+            className="w-full max-w-2xl rounded-full border border-white/10 bg-white/[0.03] px-6 py-3"
           />
         </div>
 
-        {/* DRAW BUTTON（霧感化） */}
+        {/* DRAW */}
         <div className="flex justify-center mb-10">
           <button
             onClick={handleDraw}
             disabled={isDrawLocked}
-            className="rounded-full border border-white/15 bg-white/[0.03] px-8 py-3 backdrop-blur-md hover:bg-white/[0.06] disabled:opacity-40 transition"
+            className="rounded-full border border-white/15 bg-white/[0.03] px-8 py-3 hover:bg-white/[0.06] disabled:opacity-40"
           >
             {loading ? "抽牌中..." : "開始占卜"}
           </button>
@@ -152,23 +180,24 @@ export default function LenormandPage() {
             {spread.map((item) => (
               <div
                 key={item.position}
-                className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-5"
+                className="rounded-3xl border border-white/10 bg-white/[0.03] p-5"
               >
                 <Image
                   src={item.card.image}
                   alt={item.card.name}
                   width={400}
                   height={700}
-                  className={`
-                    w-full rounded-2xl transition-all duration-[2500ms]
-                    ${revealing ? "blur-xl scale-105 opacity-70" : "blur-0 scale-100 opacity-100"}
-                  `}
+                  className={`w-full rounded-2xl transition-all duration-[2500ms] ${
+                    revealing ? "blur-xl scale-105 opacity-70" : ""
+                  }`}
                 />
 
-                <div className="mt-4 space-y-2">
+                <div className="mt-4">
                   <p className="text-sm text-[#9f9687]">{item.role}</p>
                   <h2 className="text-xl">{item.card.title}</h2>
-                  <p className="text-[#c8c0b2] text-sm">{item.card.basic}</p>
+                  <p className="text-sm text-[#c8c0b2]">
+                    {item.card.basic}
+                  </p>
                 </div>
               </div>
             ))}
@@ -182,23 +211,24 @@ export default function LenormandPage() {
             <button
               onClick={handleExplain}
               disabled={isExplainLocked}
-              className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40 transition"
+              className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06] disabled:opacity-40"
             >
               {explaining ? "解讀中..." : result ? "已解讀" : "詳細解說"}
             </button>
 
             <button
               onClick={copyPrompt}
-              className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] transition"
+              className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2 hover:bg-white/[0.06]"
             >
               複製指令貼至AI
             </button>
+
           </div>
         )}
 
         {/* RESULT */}
         {result && (
-          <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6">
+          <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
             <h3 className="mb-3 text-lg">神諭解讀</h3>
             <p className="whitespace-pre-line text-[#d6d0c6]">
               {result}
@@ -206,23 +236,21 @@ export default function LenormandPage() {
           </div>
         )}
 
-        {/* ACTIONS（霧感統一） */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center">
-
+        {/* RESET */}
+        <div className="flex justify-center gap-4">
           <button
             onClick={reset}
-            className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 hover:bg-white/[0.06] transition"
+            className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2"
           >
             重新開始
           </button>
 
           <Link
             href="/"
-            className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-md px-6 py-2 text-center hover:bg-white/[0.06] transition"
+            className="rounded-full border border-white/15 bg-white/[0.03] px-6 py-2"
           >
             返回首頁
           </Link>
-
         </div>
 
       </div>

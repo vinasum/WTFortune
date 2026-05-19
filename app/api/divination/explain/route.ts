@@ -1,12 +1,25 @@
 import { NextResponse } from "next/server";
-
 import { buildYishuPrompt } from "@/lib/prompts/yishu";
 import { buildLenormandPrompt } from "@/lib/prompts/lenormand";
 
+const APP_API_KEY = process.env.APP_API_KEY;
+
+function validateRequest(req: Request) {
+  const key = req.headers.get("x-app-key");
+  return key && key === APP_API_KEY;
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    // 🔒 API KEY CHECK
+    if (!validateRequest(req)) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
 
+    const body = await req.json();
     const { type, prompt, payload } = body;
 
     let systemPrompt = "";
@@ -22,17 +35,14 @@ export async function POST(req: Request) {
 
       default:
         return NextResponse.json(
-          {
-            success: false,
-            error: "invalid type",
-          },
+          { success: false, error: "invalid type" },
           { status: 400 }
         );
     }
 
-    // Gemini API
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
+        process.env.GEMINI_API_KEY,
       {
         method: "POST",
         headers: {
@@ -41,13 +51,10 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           contents: [
             {
+              role: "user",
               parts: [
                 {
-                  text: `
-${systemPrompt}
-
-${prompt}
-                  `,
+                  text: systemPrompt + "\n\n" + prompt,
                 },
               ],
             },
@@ -56,51 +63,18 @@ ${prompt}
       }
     );
 
-    // API error
-    if (!response.ok) {
-      const errorText = await response.text();
-
-      console.error("GEMINI ERROR:", errorText);
-
-      return NextResponse.json(
-        {
-          success: false,
-          error: errorText,
-        },
-        { status: 500 }
-      );
-    }
-
     const data = await response.json();
-
-    console.log("GEMINI RESPONSE:", data);
-
     const result =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!result) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "empty ai result",
-        },
-        { status: 500 }
-      );
-    }
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
 
     return NextResponse.json({
       success: true,
       result,
     });
-
   } catch (err) {
-    console.error("SERVER ERROR:", err);
-
+    console.error(err);
     return NextResponse.json(
-      {
-        success: false,
-        error: "server error",
-      },
+      { success: false, error: "server error" },
       { status: 500 }
     );
   }

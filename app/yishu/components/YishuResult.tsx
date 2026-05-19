@@ -74,26 +74,6 @@ export default function YishuResult({
           取得卦象
         </div>
 
-        <button
-          onClick={() =>
-            navigator.clipboard.writeText(aiPrompt)
-          }
-          className="
-            w-full
-            h-11
-            rounded-full
-
-            border border-[#5a5246]
-            bg-white/[0.03]
-
-            hover:border-[#cdbb94]
-            hover:bg-white/[0.06]
-
-            transition
-          "
-        >
-          複製你的AI神諭貼到ChatGPT
-        </button>
 
       </div>
 

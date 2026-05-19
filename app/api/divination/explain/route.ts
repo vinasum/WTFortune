@@ -2,23 +2,40 @@ import { NextResponse } from "next/server";
 import { buildYishuPrompt } from "@/lib/prompts/yishu";
 import { buildLenormandPrompt } from "@/lib/prompts/lenormand";
 
+export const runtime = "edge";
+
 const APP_API_KEY = process.env.APP_API_KEY;
 
 function validateRequest(req: Request) {
-  return true;
+  const origin = req.headers.get("origin");
+  const key = req.headers.get("x-app-key");
+
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://your-domain.com",
+  ];
+
+  const originOk = origin
+    ? allowedOrigins.includes(origin)
+    : false;
+
+  const keyOk = key === APP_API_KEY;
+
+  return originOk || keyOk;
 }
 
 export async function POST(req: Request) {
   try {
-    // 🔒 API KEY CHECK
+    // 🔒 API 防護
     if (!validateRequest(req)) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized" },
+        { error: "Unauthorized" },
         { status: 401 }
       );
     }
 
     const body = await req.json();
+
     const { type, prompt, payload } = body;
 
     let systemPrompt = "";
@@ -34,13 +51,17 @@ export async function POST(req: Request) {
 
       default:
         return NextResponse.json(
-          { success: false, error: "invalid type" },
+          { error: "invalid type" },
           { status: 400 }
         );
     }
 
+    // =========================
+    // Gemini Streaming
+    // =========================
+
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=" +
         process.env.GEMINI_API_KEY,
       {
         method: "POST",
@@ -62,18 +83,72 @@ export async function POST(req: Request) {
       }
     );
 
-    const data = await response.json();
-    const result =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    if (!response.body) {
+      return NextResponse.json(
+        { error: "No response body" },
+        { status: 500 }
+      );
+    }
 
-    return NextResponse.json({
-      success: true,
-      result,
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = response.body!.getReader();
+
+        while (true) {
+          const { done, value } = await reader.read();
+
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+
+          const lines = chunk.split("\n");
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+
+            // SSE data:
+            if (!trimmed.startsWith("data:")) continue;
+
+            const jsonText = trimmed.replace(/^data:\s*/, "");
+
+            if (jsonText === "[DONE]") continue;
+
+            try {
+              const json = JSON.parse(jsonText);
+
+              const text =
+                json?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+              if (text) {
+                controller.enqueue(
+                  encoder.encode(text)
+                );
+              }
+            } catch {
+              // ignore malformed chunks
+            }
+          }
+        }
+
+        controller.close();
+      },
     });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
+    });
+
   } catch (err) {
     console.error(err);
+
     return NextResponse.json(
-      { success: false, error: "server error" },
+      { error: "server error" },
       { status: 500 }
     );
   }

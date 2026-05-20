@@ -4,35 +4,10 @@ import { buildLenormandPrompt } from "@/lib/prompts/lenormand";
 
 export const runtime = "edge";
 
-const APP_API_KEY = process.env.APP_API_KEY;
-
-// =========================
-// Request validation（穩定版）
-// =========================
-function validateRequest(req: Request) {
-  const key = req.headers.get("x-app-key");
-
-  // 🔥 開發環境直接放行（避免 localhost 被卡）
-  if (process.env.NODE_ENV === "development") {
-    return true;
-  }
-
-  // 🔥 production 只驗 API key（穩定、不依賴 origin）
-  return key === APP_API_KEY;
-}
-
 export async function POST(req: Request) {
-    console.log("ROUTE VERSION 999");
   try {
-    // 🔒 安全檢查
-    if (!validateRequest(req)) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
-
     const body = await req.json();
+
     const { type, prompt, payload } = body;
 
     let systemPrompt = "";
@@ -54,7 +29,7 @@ export async function POST(req: Request) {
     }
 
     // =========================
-    // NON-STREAMING Gemini
+    // Gemini NON-STREAMING
     // =========================
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
@@ -102,6 +77,7 @@ export async function POST(req: Request) {
       success: true,
       result,
     });
+
   } catch (err) {
     console.error(err);
 

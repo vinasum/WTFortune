@@ -20,8 +20,6 @@ export default function LenormandPage() {
   const [revealing, setRevealing] = useState(false);
 
   const isDrawLocked = spread.length > 0 || loading;
-
-  // 🔒 一次解讀完成就鎖定
   const isExplainLocked = !!result || explaining;
 
   // =========================
@@ -70,7 +68,7 @@ ${question || "無"}
   };
 
   // =========================
-  // STREAMING AI
+  // AI 解讀（NON-streaming + soft fail）
   // =========================
   const handleExplain = async () => {
     if (!prompt || isExplainLocked) return;
@@ -94,30 +92,16 @@ ${question || "無"}
         }),
       });
 
-      if (!res.ok || !res.body) {
-        throw new Error("stream failed");
-      }
+      const data = await res.json();
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-
-        const chunk = decoder.decode(value || new Uint8Array(), {
-          stream: true,
-        });
-
-        if (chunk) {
-          setResult((prev) => (prev || "") + chunk);
-        }
+      if (data?.success) {
+        setResult(data.result || "");
+      } else {
+        alert(data?.error || "AI 服務暫時無法使用");
       }
     } catch (err) {
       console.error(err);
-      alert("目前 AI 無法使用，請改用複製指令");
+      alert("AI 服務暫時無法使用");
     } finally {
       setExplaining(false);
     }
@@ -275,9 +259,7 @@ ${question || "無"}
         {/* RESULT */}
         {result && (
           <div className="mb-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="mb-3 text-lg">
-              神諭解讀
-            </h3>
+            <h3 className="mb-3 text-lg">神諭解讀</h3>
 
             <p className="whitespace-pre-line text-[#d6d0c6] leading-8">
               {result}

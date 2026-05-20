@@ -26,6 +26,9 @@ export default function YishuPage() {
 
   const isExplainLocked = explaining || aiResult.length > 0;
 
+  // =========================
+  // 起卦
+  // =========================
   async function handleDivination() {
     setLoading(true);
 
@@ -94,7 +97,9 @@ ${question || "無"}
     setLoading(false);
   }
 
-  // STREAMING AI
+  // =========================
+  // AI 解讀（NON-STREAMING）
+  // =========================
   const handleExplain = async () => {
     if (!prompt || isExplainLocked) return;
 
@@ -120,26 +125,12 @@ ${question || "無"}
         }),
       });
 
-      if (!res.ok || !res.body) {
-        throw new Error("stream failed");
-      }
+      const data = await res.json();
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-
-        const chunk = decoder.decode(value || new Uint8Array(), {
-          stream: true,
-        });
-
-        if (chunk) {
-          setAiResult((prev) => prev + chunk);
-        }
+      if (data?.success) {
+        setAiResult(data.result);
+      } else {
+        alert("目前 AI 服務無法使用，請改用複製指令");
       }
     } catch (err) {
       console.error(err);
@@ -149,12 +140,18 @@ ${question || "無"}
     }
   };
 
+  // =========================
+  // copy prompt
+  // =========================
   const copyPrompt = async () => {
     if (!prompt) return;
     await navigator.clipboard.writeText(prompt);
     alert("已複製指令");
   };
 
+  // =========================
+  // reset
+  // =========================
   function resetAll() {
     setN1("");
     setN2("");
@@ -179,7 +176,6 @@ ${question || "無"}
 
           {/* Header */}
           <div className="flex items-center justify-between mb-10">
-
             <button
               onClick={() => router.push("/")}
               className="text-sm tracking-[0.2em] text-[#b8aa8c] hover:text-[#f5f1ea]"
@@ -195,11 +191,13 @@ ${question || "無"}
                 ↻ 重新開始
               </button>
             )}
-
           </div>
 
+          {/* Title */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-light mb-6">易數流卦</h1>
+            <h1 className="text-4xl font-light mb-6">
+              易數流卦
+            </h1>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left">
               <p className="text-sm leading-relaxed text-[#c8b8a6]/80">
@@ -208,6 +206,7 @@ ${question || "無"}
             </div>
           </div>
 
+          {/* Form */}
           <div className="mb-10">
             <YishuForm
               n1={n1}
@@ -221,8 +220,10 @@ ${question || "無"}
             />
           </div>
 
+          {/* Result */}
           {result && <YishuResult result={result} />}
 
+          {/* AI Actions */}
           {prompt && (
             <div className="flex flex-col md:flex-row gap-4 justify-center mt-10">
 
@@ -248,6 +249,7 @@ ${question || "無"}
             </div>
           )}
 
+          {/* AI Result */}
           {aiResult && (
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
               <h3 className="mb-3">神諭解讀</h3>
@@ -257,6 +259,7 @@ ${question || "無"}
             </div>
           )}
 
+          {/* Bottom Buttons */}
           <div className="flex justify-center gap-4 mt-10">
 
             <button

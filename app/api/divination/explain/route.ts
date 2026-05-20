@@ -22,6 +22,7 @@ function validateRequest(req: Request) {
 }
 
 export async function POST(req: Request) {
+    console.log("ROUTE VERSION 999");
   try {
     // 🔒 安全檢查
     if (!validateRequest(req)) {

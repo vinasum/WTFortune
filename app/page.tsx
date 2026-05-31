@@ -66,7 +66,38 @@ export default function Home() {
         {/* CARDS */}
         <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 opacity-90">
 
-          {/* card 1 */}
+          {/* card 1 — LENORMAND（已移到第一個） */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
+              <Image
+                src="/icons/divination/lenormand.png"
+                alt="雷諾曼卡牌"
+                width={150}
+                height={150}
+                className="w-24 h-24"
+                priority
+              />
+            </div>
+
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
+              雷諾曼卡牌占卜
+            </h2>
+
+            <p className="relative z-10 text-[#a8a091] text-center">
+              直覺圖卡 | 解析過去、現在與未來
+            </p>
+
+            <Link
+              href="/lenormand"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
+            >
+              開始占卜
+            </Link>
+          </div>
+
+          {/* card 2 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
             <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
@@ -97,7 +128,7 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* card 2 */}
+          {/* card 3 */}
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
             <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
 
@@ -125,37 +156,6 @@ export default function Home() {
               className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
             >
               開始起卦
-            </Link>
-          </div>
-
-          {/* card 3 */}
-          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
-            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
-
-            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
-              <Image
-                src="/icons/divination/lenormand.png"
-                alt="雷諾曼卡牌"
-                width={150}
-                height={150}
-                className="w-24 h-24"
-                priority
-              />
-            </div>
-
-            <h2 className="relative z-10 mb-3 text-2xl text-center">
-              雷諾曼卡牌占卜
-            </h2>
-
-            <p className="relative z-10 text-[#a8a091] text-center">
-              直覺圖卡 | 解析過去、現在與未來
-            </p>
-
-            <Link
-              href="/lenormand"
-              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
-            >
-              開始占卜
             </Link>
           </div>
 

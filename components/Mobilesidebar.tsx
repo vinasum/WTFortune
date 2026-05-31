@@ -84,6 +84,14 @@ export default function MobileSidebar() {
 
             <div className="flex flex-col gap-1">
               <Link
+                href="/lenormand"
+                className={linkClass("/lenormand")}
+                onClick={() => setOpen(false)}
+              >
+                雷諾曼卡牌
+              </Link>
+
+              <Link
                 href="/liuren"
                 className={linkClass("/liuren")}
                 onClick={() => setOpen(false)}
@@ -99,13 +107,6 @@ export default function MobileSidebar() {
                 易數流卦
               </Link>
 
-              <Link
-                href="/lenormand"
-                className={linkClass("/lenormand")}
-                onClick={() => setOpen(false)}
-              >
-                雷諾曼卡牌
-              </Link>
             </div>
           </div>
 

@@ -39,6 +39,10 @@ export default function Sidebar() {
           <div className={sectionTitle}>占卜</div>
 
           <div className="flex flex-col gap-1">
+            <Link href="/lenormand" className={linkClass("/lenormand")}>
+              雷諾曼卡牌
+            </Link>
+
             <Link href="/liuren" className={linkClass("/liuren")}>
               小六壬
             </Link>
@@ -47,9 +51,6 @@ export default function Sidebar() {
               易數流卦
             </Link>
 
-            <Link href="/lenormand" className={linkClass("/lenormand")}>
-              雷諾曼卡牌
-            </Link>
           </div>
         </div>
 

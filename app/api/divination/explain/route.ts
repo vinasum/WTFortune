@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          error: "Gemini API failed",
+          error: "免費解說限額已滿，請自行複製指令貼至AI",
           detail: errText,
         },
         { status: 500 }

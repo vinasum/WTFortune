@@ -3,7 +3,7 @@ import { LenormandCard } from "./types";
 const DARK_IMAGE_BASE = "/lenormand/dark";
 const LIGHT_IMAGE_BASE = "/lenormand/light";
 
-const BASE_CARDS: Omit<LenormandCard, "id" | "aspect" | "image">[] = [
+const BASE_CARDS: LenormandCard[] = [
   // =====================
   // RIDER
   // =====================

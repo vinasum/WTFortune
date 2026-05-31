@@ -50,7 +50,6 @@ export default function Sidebar() {
             <Link href="/yishu" className={linkClass("/yishu")}>
               易數流卦
             </Link>
-
           </div>
         </div>
 
@@ -63,13 +62,14 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* 關於我 */}
+        {/* 關於本站 */}
         <div>
-          <div className={sectionTitle}>關於我</div>
+          <div className={sectionTitle}>關於本站</div>
 
-          <div className="px-3 py-2 text-white/40 text-base leading-relaxed">
-            之後將放置論命預約連結<br />
-            以及 YT / IG / Threads
+          <div className="flex flex-col gap-1">
+            <Link href="/about" className={linkClass("/about")}>
+              關於理念
+            </Link>
           </div>
         </div>
 

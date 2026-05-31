@@ -22,10 +22,7 @@ export default function MobileSidebar() {
     <>
       {/* Top Bar */}
       <div className="md:hidden sticky top-0 z-40 flex items-center justify-between border-b border-white/10 bg-[#0b0b0b]/90 backdrop-blur px-4 py-3">
-        <button
-          onClick={() => setOpen(true)}
-          className="text-white text-xl"
-        >
+        <button onClick={() => setOpen(true)} className="text-white text-xl">
           ☰
         </button>
 
@@ -56,10 +53,7 @@ export default function MobileSidebar() {
             What the Fortune
           </div>
 
-          <button
-            onClick={() => setOpen(false)}
-            className="text-white/70"
-          >
+          <button onClick={() => setOpen(false)} className="text-white/70">
             ✕
           </button>
         </div>
@@ -106,7 +100,6 @@ export default function MobileSidebar() {
               >
                 易數流卦
               </Link>
-
             </div>
           </div>
 
@@ -119,13 +112,18 @@ export default function MobileSidebar() {
             </div>
           </div>
 
-          {/* 關於我 */}
+          {/* 關於本站 */}
           <div>
-            <div className={sectionTitle}>關於我</div>
+            <div className={sectionTitle}>關於本站</div>
 
-            <div className="px-3 py-2 text-white/40 text-base leading-relaxed">
-              之後將放置論命預約連結<br />
-              以及 YT / IG / Threads
+            <div className="flex flex-col gap-1">
+              <Link
+                href="/about"
+                className={linkClass("/about")}
+                onClick={() => setOpen(false)}
+              >
+                關於理念
+              </Link>
             </div>
           </div>
 

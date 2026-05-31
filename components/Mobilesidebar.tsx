@@ -122,7 +122,7 @@ export default function MobileSidebar() {
                 className={linkClass("/about")}
                 onClick={() => setOpen(false)}
               >
-                關於理念
+                更多資訊
               </Link>
             </div>
           </div>

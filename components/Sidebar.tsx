@@ -68,7 +68,7 @@ export default function Sidebar() {
 
           <div className="flex flex-col gap-1">
             <Link href="/about" className={linkClass("/about")}>
-              關於理念
+              更多資訊
             </Link>
           </div>
         </div>

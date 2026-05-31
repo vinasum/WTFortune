@@ -1,80 +1,186 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
-  const pathname = usePathname();
-
-  const linkClass = (path: string) =>
-    `px-3 py-2 rounded-md text-base transition ${
-      pathname === path
-        ? "bg-white/10 text-white"
-        : "text-white/70 hover:text-white hover:bg-white/5"
-    }`;
-
-  const sectionTitle =
-    "px-3 py-2 text-[14px] tracking-[0.2em] text-white/30";
+export default function Home() {
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "What the Fortune",
+          text: "我發現一個很特別的神諭占卜網站",
+          url: window.location.origin,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.origin);
+        alert("網站網址已複製");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-[#0f0f0f] border-r border-white/10">
+    <main className="relative min-h-screen overflow-hidden bg-[#111111] text-[#f5f1ea]">
 
-      {/* Brand */}
-      <div className="p-4 text-white font-semibold text-lg">
-        What the Fortune
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
+
+      <div className="absolute right-5 top-5 z-30">
+        <button
+          onClick={handleShare}
+          className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-white/80 backdrop-blur-xl"
+        >
+          分享
+        </button>
       </div>
 
-      {/* Nav */}
-      <nav className="flex flex-col p-4 text-base">
+      <section className="relative z-10 flex flex-col items-center px-6 pt-10 md:pt-12">
 
-        {/* 首頁 */}
-        <div className="mb-6">
-          <Link href="/" className={linkClass("/")}>
-            首頁
-          </Link>
+        <div className="flex flex-col items-center pt-6">
+          <Image
+            src="/logo.png"
+            alt="What the Fortune"
+            width={200}
+            height={200}
+            priority
+            fetchPriority="high"
+            className="w-36 h-auto -translate-y-2 md:-translate-y-3"
+          />
         </div>
 
-        {/* 占卜 */}
-        <div className="mb-6">
-          <div className={sectionTitle}>占卜</div>
+        <div className="h-10 md:h-14" />
 
-          <div className="flex flex-col gap-1">
-            <Link href="/lenormand" className={linkClass("/lenormand")}>
-              雷諾曼卡牌
+        <div className="max-w-2xl text-center mt-0">
+          <h1 className="text-4xl font-light md:text-6xl">
+            聽聽未來怎麼說？
+          </h1>
+
+          <p className="mt-6 text-lg text-[#b3ab9d] md:text-xl">
+            東西方命理快占 × AI 神諭圖卡系統
+          </p>
+        </div>
+
+        <div className="h-6 md:h-10" />
+
+        {/* CARDS */}
+        <section className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 opacity-90">
+
+          {/* card 1 — LENORMAND（已移到第一個） */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
+              <Image
+                src="/icons/divination/lenormand.png"
+                alt="雷諾曼卡牌"
+                width={150}
+                height={150}
+                className="w-24 h-24"
+                priority
+              />
+            </div>
+
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
+              雷諾曼卡牌占卜
+            </h2>
+
+            <p className="relative z-10 text-[#a8a091] text-center">
+              直覺圖卡 | 解析過去、現在與未來
+            </p>
+
+            <Link
+              href="/lenormand"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
+            >
+              開始占卜
             </Link>
+          </div>
 
-            <Link href="/liuren" className={linkClass("/liuren")}>
-              小六壬
+          {/* card 2 */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
+              <Image
+                src="/icons/divination/liuren.png"
+                alt="小六壬"
+                width={150}
+                height={150}
+                className="w-24 h-24"
+                priority
+              />
+            </div>
+
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
+              小六壬占卜
+            </h2>
+
+            <p className="relative z-10 text-[#a8a091] text-center">
+              感情 / 工作 / 人際快速觀測
+            </p>
+
+            <Link
+              href="/liuren"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
+            >
+              開始占卜
             </Link>
+          </div>
 
-            <Link href="/yishu" className={linkClass("/yishu")}>
+          {/* card 3 */}
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-8">
+            <div className="absolute inset-0 bg-white/[0.02] pointer-events-none" />
+
+            <div className="relative z-10 mb-5 flex justify-center h-[110px] items-center">
+              <Image
+                src="/icons/divination/yishu.png"
+                alt="易數流卦"
+                width={150}
+                height={150}
+                className="w-24 h-24"
+                priority
+              />
+            </div>
+
+            <h2 className="relative z-10 mb-3 text-2xl text-center">
               易數流卦
+            </h2>
+
+            <p className="relative z-10 text-[#a8a091] text-center">
+              數字起卦 × 複雜狀態卦象解讀
+            </p>
+
+            <Link
+              href="/yishu"
+              className="relative z-10 mt-8 flex h-12 items-center justify-center rounded-full border border-[#5a5246] bg-white/[0.04]"
+            >
+              開始起卦
             </Link>
           </div>
-        </div>
 
-        {/* 命理 */}
-        <div className="mb-6">
-          <div className={sectionTitle}>命理</div>
+        </section>
 
-          <div className="px-3 py-2 text-white/40 text-base">
+        {/* COMING SOON */}
+        <div className="mt-32 w-full max-w-5xl">
+          <p className="mb-10 text-center text-sm tracking-[0.35em] text-[#7d7668]">
             COMING SOON
+          </p>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 opacity-70">
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🪷 八字命盤
+            </div>
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🌌 紫微斗數
+            </div>
+            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-8 text-center">
+              🕯️ 合盤分析
+            </div>
           </div>
         </div>
 
-        {/* 關於本站 */}
-        <div className="mb-6">
-          <div className={sectionTitle}>關於本站</div>
-
-          <Link
-            href="/about"
-            className={linkClass("/about")}
-          >
-            About / 關於理念
-          </Link>
-        </div>
-
-      </nav>
-    </aside>
+      </section>
+    </main>
   );
 }
